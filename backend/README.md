@@ -29,7 +29,7 @@ $ pip3 install flask flask-mysqldb
 
 ## Create `password.txt` file in the same directory as `service.py`
 
-Create a password.txt file which will contain only the MySQL password.
+Create a `password.txt` file which will contain only the MySQL password.
 The `service.py` flask script reads the password to access the User database.
 
 ## Run Flask server:
