@@ -15,6 +15,6 @@ CREATE TABLE Reviews
 	Username CHAR(40) NOT NULL,
 	ReviewText VARCHAR(512) NOT NULL,
 
-	PRIMARY KEY (TourID),
+	PRIMARY KEY (TourID, Username),
 	FOREIGN KEY (Username) REFERENCES LoginInfo(Username)
 );
