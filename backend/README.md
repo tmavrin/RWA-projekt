@@ -1,3 +1,38 @@
+# Backend tech design
+
+### Show User Reviews
+route: (`/show-user-reviews`, methods=['POST'])  
+parameters: username  
+purpose: Returns all reviews associated with the username  
+
+### Show All Reviews
+route: (`/show-reviews`, methods=['GET'])  
+parameters:  
+purpose: Returns all reviews  
+
+### Create Review  
+route : (`/create-review`, methods=['POST'])  
+parameters: tourid, username, review_text
+purpose: Creates a new review entry  
+
+### Create User
+route: (`/create-user`, methods=['POST'])  
+parameters: username, password  
+purpose: Creates a new user  
+
+### Login
+route: (`/check-login`, methods=['POST'])  
+parameters: username, password  
+purpose: Returns number of matching username-password pairs  
+
+### Login Info  
+route: (`/show-login-info`, methods=['GET'])  
+parameters:   
+purpose: Returns all users  
+
+</br></br></br></br>
+
+
 # Backend setup
 
 ## MySQL setup:
