@@ -1,0 +1,41 @@
+.top-offer-container {
+  margin: 20px 0;
+  width: 350px;
+  height: 200px;
+  background-color: rgba(255, 241, 242, 0.8);
+  box-shadow: 0px 0px 8px rgba(254, 69, 75, 0.5);
+
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  .offer-text {
+    padding-left: 15px;
+
+    h3 {
+      font-size: 20px;
+      font-weight: normal;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 14px;
+      color: #717171;
+      max-height: 40%;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    button {
+      font-size: 14px;
+      position: relative;
+      bottom: -25px;
+      right: -88px;
+      border-color: #fe454b;
+      color: #fe454b;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.heading {
+  background-image: url(../../assets/home/home.png);
+  width: 100%;
+  height: 600px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.text-container {
+  padding: 50px 10% 0 55%;
+  color: white;
+
+  h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 17px;
+  }
+
+  .heading-buttons {
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.top-offers {
+  width: 90%;
+  margin: auto;
+
+  h1 {
+    text-transform: uppercase;
+    color: #fe454b;
+    font-size: 36px;
+  }
+
+  .offer-box {
+    margin: 40px 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+}
