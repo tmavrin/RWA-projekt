@@ -1,5 +1,113 @@
 # Backend tech design
 
+#### Create User
+route: (`/create-user`, methods=['POST'])  
+parameters: username, password  
+purpose: Creates a new user  
+</br></br>
+#### Login
+route: (`/check-login`, methods=['POST'])  
+parameters: username, password  
+purpose: Returns number of matching username-password pairs  
+</br></br>
+#### Login Info  
+route: (`/show-login-info`, methods=['GET'])  
+parameters:   
+purpose: Returns all users 
+</br></br>
+### Create Offer
+Route (`/offer/create`, method=`POST`)  
+Body: 
+```JSON
+{
+ "title" : string,    
+  "description": string,    
+  "price": number,
+  "date" : timestamp/date/string,
+  "picture": url/file,
+  "pdf": url/file
+} 
+```
+Response: `HTTP STATUS`  
+</br></br>
+### Get ALL Offers
+route (`/offer/getAll`, method=`GET`)  
+Response: 
+```JSON
+[
+  {
+    "id" : string,
+    "title" : string,    
+    "description": string,    
+    "price": number,
+    "date" : timestamp/date/string,
+    "picture": url/file,
+    "pdf": url/file
+  },
+  {
+    ...
+  },
+  ...
+]
+```
+</br></br>
+### Get TOP Offers
+Route (`/offer/getTop`, method=`GET`)  
+Response: 
+```JSON
+[
+  {
+    "id": string,
+    "title" : string,    
+    "description": string,    
+    "price": number,
+    "date" : timestamp/date/string,
+    "picture": url/file,
+    "pdf": url/file
+  },
+  {
+    ...
+  },
+  ...
+]
+```
+</br></br>
+### Set TOP Offer
+Route (`/offer/setTop`, method=`PUT`)  
+Body:
+```
+{
+  "id": string
+}
+```
+Response: `HTTP STATUS`  
+</br></br>
+### Remove TOP Offer
+Route (`/offer/removeTop`, method=`PUT`)  
+Body:
+```
+{
+  "id": string
+}
+```
+Response: `HTTP STATUS` 
+</br></br>
+### Get Gallery
+Route (`/gallery/get`, method=`GET`)  
+Response :
+```
+  [
+    "url" : string,
+    "url" : string,
+    "url" : string,
+    "url" : string,
+    ...
+  ]
+```
+
+</br></br></br></br></br></br></br></br>
+`NOT PRIORITY`
+
 ### Show User Reviews
 route: (`/show-user-reviews`, methods=['POST'])  
 parameters: username  
@@ -15,22 +123,6 @@ route : (`/create-review`, methods=['POST'])
 parameters: tourid, username, review_text
 purpose: Creates a new review entry  
 
-### Create User
-route: (`/create-user`, methods=['POST'])  
-parameters: username, password  
-purpose: Creates a new user  
-
-### Login
-route: (`/check-login`, methods=['POST'])  
-parameters: username, password  
-purpose: Returns number of matching username-password pairs  
-
-### Login Info  
-route: (`/show-login-info`, methods=['GET'])  
-parameters:   
-purpose: Returns all users  
-
-</br></br></br></br>
 
 
 # Backend setup
