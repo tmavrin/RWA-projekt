@@ -1,16 +1,16 @@
 # Backend tech design
 
-#### Create User
+### Create User
 route: (`/create-user`, methods=['POST'])  
 parameters: username, password  
 purpose: Creates a new user  
 </br></br>
-#### Login
+### Login
 route: (`/check-login`, methods=['POST'])  
 parameters: username, password  
 purpose: Returns number of matching username-password pairs  
 </br></br>
-#### Login Info  
+### Login Info  
 route: (`/show-login-info`, methods=['GET'])  
 parameters:   
 purpose: Returns all users 
