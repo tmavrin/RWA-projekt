@@ -10,11 +10,6 @@ route: (`/check-login`, methods=['POST'])
 parameters: username, password  
 purpose: Returns number of matching username-password pairs  
 </br></br>
-### Login Info  
-route: (`/show-login-info`, methods=['GET'])  
-parameters:   
-purpose: Returns all users 
-</br></br>
 ### Create Offer
 Route (`/offer/create`, method=`POST`)  
 Body: 
@@ -106,7 +101,11 @@ Response :
 ```
 
 </br></br></br></br></br></br></br></br>
-`NOT PRIORITY`
+## `NOT PRIORITY` Trenutno nije prioritet   
+### Login Info  
+route: (`/show-login-info`, methods=['GET'])  
+parameters:   
+purpose: Returns all users  
 
 ### Show User Reviews
 route: (`/show-user-reviews`, methods=['POST'])  
