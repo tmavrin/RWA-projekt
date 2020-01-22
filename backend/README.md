@@ -1,124 +1,106 @@
 # Backend tech design
 
-### Create User
-route: (`/create-user`, methods=['POST'])  
-parameters: username, password  
-purpose: Creates a new user  
-</br></br>
-### Login
-route: (`/check-login`, methods=['POST'])  
-parameters: username, password  
-purpose: Returns number of matching username-password pairs  
-</br></br>
-### Create Offer
-Route (`/offer/create`, method=`POST`)  
-Body: 
-```JSON
-{
- "title" : string,    
-  "description": string,    
-  "price": number,
-  "date" : timestamp/date/string,
-  "picture": url/file,
-  "pdf": url/file
-} 
-```
-Response: `HTTP STATUS`  
-</br></br>
-### Get ALL Offers
-route (`/offer/getAll`, method=`GET`)  
-Response: 
-```JSON
-[
-  {
-    "id" : string,
-    "title" : string,    
-    "description": string,    
-    "price": number,
-    "date" : timestamp/date/string,
-    "picture": url/file,
-    "pdf": url/file
-  },
-  {
-    ...
-  },
-  ...
-]
-```
-</br></br>
-### Get TOP Offers
-Route (`/offer/getTop`, method=`GET`)  
-Response: 
-```JSON
-[
-  {
-    "id": string,
-    "title" : string,    
-    "description": string,    
-    "price": number,
-    "date" : timestamp/date/string,
-    "picture": url/file,
-    "pdf": url/file
-  },
-  {
-    ...
-  },
-  ...
-]
-```
-</br></br>
-### Set TOP Offer
-Route (`/offer/setTop`, method=`PUT`)  
-Body:
-```
-{
-  "id": string
-}
-```
-Response: `HTTP STATUS`  
-</br></br>
-### Remove TOP Offer
-Route (`/offer/removeTop`, method=`PUT`)  
-Body:
-```
-{
-  "id": string
-}
-```
-Response: `HTTP STATUS` 
-</br></br>
-### Get Gallery
-Route (`/gallery/get`, method=`GET`)  
-Response :
-```
-  [
-    "url" : string,
-    "url" : string,
-    "url" : string,
-    "url" : string,
-    ...
-  ]
-```
+## `TO DO`
+If possible, enable receiving and, *more importantly*, returning data in JSON format.  
+Backend server should be able to perform all CRUD operations on all tables.  
+Note that route URLs for all methods except `DELETE` should contain only the name of DB relation they access.  
+For examples, check out the `DONE` section.  
+\* Adding pdfs to DB would be nice, but `NOT A PRIORITY`.
 
-</br></br></br></br></br></br></br></br>
-## `NOT PRIORITY` Trenutno nije prioritet   
-### Login Info  
-route: (`/show-login-info`, methods=['GET'])  
+#### Get all offers
+route: `/offers`, method=`['GET']`  
+parameters:  
+purpose: Returns all offers
+
+#### Create offer
+route: `/offers`, method=`['POST']`  
+parameters: title, description, price, date, picture, (pdf*)  
+purpose: Creates a new offer
+
+#### Edit offer
+route: `/offers`, method=`['PUT']`  
+parameters: tourId, title, description, price, date, picture, (pdf*)  
+purpose: Edits the offer with specified tourId
+
+#### Delete offer
+route: `/offers/tourId`, method=`['DELETE']`  
+parameters:  
+purpose: Deletes offer with specified tourId
+
+#### Get top offers
+route: `/top-offers`, method=`['GET']`  
+parameters:  
+purpose: Returns all top offers
+
+#### Mark offer as top offer
+route: `/top-offers`, method=`['POST']`  
+parameters: tourId  
+purpose: Adds offer with specified tourId to the top offers list
+
+#### Remove offer from top offers list
+route: `/top-offers/tourId`, method=`['DELETE']`  
+parameters:   
+purpose: Removes offer with specified tourId from the top offers list
+
+## `DONE`
+\* Should review the similarity between 'Get user by username' and 'Login'
+or how authentication is usually handled in similar cases.
+DB should not contain user passwords in raw form. 
+
+#### Get all users
+route: `/users`, method=`['GET']`  
 parameters:   
 purpose: Returns all users  
 
-### Show User Reviews
-route: (`/show-user-reviews`, methods=['POST'])  
+#### Get user by username*
+route: `/users`, method=`['GET']`  
+parameters: username  
+purpose: Returns user with specified username
+
+#### Create user
+route: `/users`, method=`['POST']`  
+parameters: username, password  
+purpose: Creates a new user
+
+#### Edit user password
+route: `/users`, method=`['PUT']`  
+parameters: username, password  
+purpose: Edits the user (password) with specified username
+
+#### Delete user
+route: `/users/username`, method=`['DELETE']`  
+parameters:  
+purpose: Deletes user with specified username
+
+#### Login*
+route: `/check-login`, method=`['POST']`  
+parameters: username, password  
+purpose: Returns number of matching username-password pairs  
+
+
+## `NOT A PRIORITY`
+#### Get gallery
+route: `/gallery`, method=`['GET']`  
+parameters:  
+purpose: Returns all photos (url)  
+
+#### Get offer by tourId
+route: `/offers`, method=`['GET']`  
+parameters: tourId  
+purpose: Returns offer with specified tourId
+
+#### Show user reviews
+route: (`/show-user-reviews`, method=`['POST']`)  
 parameters: username  
 purpose: Returns all reviews associated with the username  
 
-### Show All Reviews
-route: (`/show-reviews`, methods=['GET'])  
+#### Show all reviews
+route: (`/show-reviews`, method=`['GET']`)  
 parameters:  
 purpose: Returns all reviews  
 
-### Create Review  
-route : (`/create-review`, methods=['POST'])  
+#### Create review  
+route : (`/create-review`, method=`['POST']`)  
 parameters: tourid, username, review_text
 purpose: Creates a new review entry  
 
@@ -149,7 +131,7 @@ mysql> source user.sql
 ```bash
 $ sudo apt-get update
 $ sudo apt-get install python3 python3-pip python3-flask
-$ pip3 install flask flask-mysqldb 
+$ pip3 install flask flask-mysqldb flask-cors
 # might need to install dependencies for flask-mysqldb
 ```
 

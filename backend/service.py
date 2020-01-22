@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+cors = CORS(app)
 
 with open('password.txt') as f:
     mysql_passwd = f.readline().strip()
@@ -24,6 +26,44 @@ def send_query(query):
     print('Returning the following data: ' + str(data))
     return jsonify(data)
 
+
+################################
+##      LoginInfo METHODS     ##
+################################
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    if 'username' in request.args:
+        username = request.args['username']
+        query = (f'SELECT * FROM LoginInfo WHERE username=\'{username}\'')
+    else:
+        query = 'SELECT * FROM LoginInfo'
+    return send_query(query)
+
+@app.route('/users', methods=['POST'])
+def create_user():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    query = (f'INSERT INTO LoginInfo(Username, Password)  '
+            f'VALUES(\'{username}\', \'{password}\')')
+    return send_query(query)
+
+@app.route('/users', methods=['PUT'])
+def update_user_set_new_password():
+    username = request.form.get('username')
+    new_password = request.form.get('password')
+    query = (f'UPDATE LoginInfo SET Password=\'{new_password}\' '
+            f'WHERE username=\'{username}\'')
+    return send_query(query)
+
+@app.route('/users/<string:username>', methods=['DELETE'])
+def delete_user(username):
+    query = (f'DELETE FROM LoginInfo WHERE username=\'{username}\'')
+    return send_query(query)
+
+
+################################
+
 @app.route('/show-user-reviews', methods=['POST'])
 def show_user_reviews():
     '''
@@ -41,16 +81,6 @@ def create_review():
     review_text = request.form.get('review_text')
     query = (f'INSERT INTO Reviews(TourID, Username, ReviewText)  '
             f'VALUES({tourid}, \'{username}\', \'{review_text}\')')
-    return send_query(query)
-
-@app.route('/create-user', methods=['POST'])
-def create_user():
-    '''
-    '''
-    username = request.form.get('username')
-    password = request.form.get('password')
-    query = (f'INSERT INTO LoginInfo(Username, Password)  '
-            f'VALUES(\'{username}\', \'{password}\')')
     return send_query(query)
 
 @app.route('/check-login', methods=['POST'])
@@ -76,11 +106,6 @@ def check_login():
 @app.route('/', methods=['GET'])
 def greet():
     return 'Sladoled!'
-
-@app.route('/show-login-info', methods=['GET'])
-def describe_login():
-    query = 'SELECT * FROM LoginInfo'
-    return send_query(query)
 
 @app.route('/show-reviews', methods=['GET'])
 def describe_review():

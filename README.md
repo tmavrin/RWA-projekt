@@ -1,5 +1,5 @@
 #### Trello Board: https://trello.com/b/EdS3mFpp/rwa-popaji
-#### Dizajn link: 
+#### Dizajn link: https://www.figma.com/file/Pp9g96K5QgPQHtNqrLVRS8/RWA
 
 # RWA-projekt
 Projekt iz kolegija Razvoj Web Aplikacija
