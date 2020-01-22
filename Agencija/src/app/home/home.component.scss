@@ -1,5 +1,5 @@
 .heading {
-  background-image: url(../../assets/home/home.png);
+  background-image: url('../../assets/images/home.png');
   width: 100%;
   height: 60vh;
   background-repeat: no-repeat;
@@ -20,10 +20,10 @@
     font-size: 17px;
   }
 
-  .heading-buttons {
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-around;
+  .heading-buttons button {
+    border-color: white;
+    color: white;
+    margin-top: 15px;
   }
 }
 
@@ -39,8 +39,6 @@
 
   .offer-box {
     margin: 40px 0;
-    display: flex;
-    justify-content: space-around;
     flex-wrap: wrap;
   }
 }

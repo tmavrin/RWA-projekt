@@ -30,13 +30,18 @@ body {
   justify-content: space-between;
 }
 
+.flex_space_around {
+  display: flex;
+  justify-content: space-around;
+}
+
 .pointer {
   cursor: pointer;
 }
 
 button {
-  border: white 2px solid;
-  color: white;
+  border: black 2px solid;
+  color: black;
   background: transparent;
   padding: 7px 10px;
   text-transform: uppercase;

@@ -1,5 +1,5 @@
 nav {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.35);
   font-family: "Oswald Light", sans-serif;
 }
 
@@ -24,10 +24,9 @@ li {
   text-transform: uppercase;
   letter-spacing: 0.4px;
   color: #ffffff;
-  font-weight: bold;
   font-size: 18px;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.15);
   }
 }

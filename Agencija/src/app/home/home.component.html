@@ -8,16 +8,16 @@
       congue praesent, pellentesque nec tempus mi lectus ullamcorper eget
       maecenas, per natoque arcu convallis cubilia laoreet aptent odio..
     </p>
-    <div class="heading-buttons">
-      <button>Discover More</button>
-      <button>Contact Us</button>
+    <div class="heading-buttons flex_space_around">
+      <button class="pointer" routerLink="offer">Discover More</button>
+      <button class="pointer" routerLink="contact">Contact Us</button>
     </div>
   </div>
 </div>
 
 <div class="top-offers">
   <h1 class="title-font">Our top offers</h1>
-  <div class="offer-box">
+  <div class="offer-box flex_space_around">
     <app-top-offer
       *ngFor="let offer of topOffers"
       [offer]="offer"
