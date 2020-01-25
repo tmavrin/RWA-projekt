@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.router.events.subscribe(changed => {
+    this.router.events.subscribe(() => {
       this.currentPath = this.router.url;
     });
   }

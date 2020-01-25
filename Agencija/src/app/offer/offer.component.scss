@@ -1,3 +1,48 @@
+.offers-header {
+  padding-top: 60px;
+  width: 100%;
+  height: 260px;
+  background: #ffdf35;
+  display: flex;
+  flex-direction: column;
+
+  .filter-box {
+    margin: 30px 5%;
+    display: flex;
+    justify-content: space-between;
+
+    .filter-input {
+      width: 30%;
+      p {
+        font-weight: bold;
+        font-size: 22px;
+        margin: 10px 0;
+      }
+      select,
+      input {
+        height: 35px;
+        width: 80%;
+        border: none;
+        border-radius: 6px;
+        background: white;
+      }
+    }
+  }
+
+  //TODO FINISH THIS
+  .sort-by {
+    margin: 0 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    input {
+      background: transparent;
+      border: none;
+    }
+  }
+}
+
 .result-box {
   margin: 50px auto;
   max-width: 800px;

@@ -1,3 +1,40 @@
+<div class="offers-header">
+  <div class="filter-box">
+    <div class="filter-input">
+      <p class="title-font">Kategorija</p>
+      <select>
+        <option value="kat1">kat1</option>
+        <option value="kat2">kat2</option>
+        <option value="kat3">kat3</option>
+        <option value="kat4">kat4</option>
+      </select>
+    </div>
+
+    <div class="filter-input">
+      <p class="title-font">Polazak</p>
+      <input type="text" />
+    </div>
+
+    <div class="filter-input">
+      <p class="title-font">Povratak</p>
+      <input type="text" />
+    </div>
+
+    <div class="filter-input">
+      <p class="title-font">Max Cijena</p>
+      <input type="text" />
+    </div>
+  </div>
+
+  <!-- TODO FINISH THIS-->
+  <div class="sort-by">
+    <p>Sortiraj po:</p>
+    <p>CIJENI</p>
+    <p>DATUM POLASKA</p>
+    <input type="text" />
+  </div>
+</div>
+
 <div class="result-box">
   <app-default-offer *ngFor="let o of offers" [offer]="o"></app-default-offer>
 </div>

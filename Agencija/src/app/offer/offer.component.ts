@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DUMMY_OFFERS } from '../VO/Offer';
+import { OfferService } from '../services/offer.service';
 
 @Component({
   selector: 'app-offer',
@@ -7,9 +8,14 @@ import { DUMMY_OFFERS } from '../VO/Offer';
   styleUrls: ['./offer.component.scss']
 })
 export class OfferComponent implements OnInit {
-  offers = DUMMY_OFFERS;
+  offers: any = DUMMY_OFFERS;
 
-  constructor() {}
+  constructor(private offerService: OfferService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.offerService.getAllOffers().subscribe(offers => {
+      console.log(offers);
+      this.offers = offers;
+    });
+  }
 }
