@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from flask_cors import CORS
-import os
+import json
 
 
 app = Flask(__name__)
@@ -23,7 +23,11 @@ def send_query(query):
     mysql.connection.commit()
     data = cur.fetchall()
     #print('Returning the following data: ' + str(data))
-    return jsonify(data)
+    row_headers=[x[0] for x in cur.description]
+    json_data=[]
+    for result in data:
+            json_data.append(dict(zip(row_headers,result)))
+    return jsonify(json_data)
 
 
 ################################
@@ -42,9 +46,35 @@ def create_offer():
     title = data['title']
     desc = data['description']
     price = data['price']
-    query = "INSERT INTO offer (title,description,price) VALUES ('"+title+"','" + desc + "'," + price + ")"
+    query = "INSERT INTO offer (title,description,price) VALUES ('{}','{}','{}')".format(title,desc,price)
     return send_query(query)
 
+@app.route('/offers', methods=['PUT'])
+def update_offerr():
+    data = request.get_json()
+    # mozda postoji bolji nacin za ovo?
+    title = data['title']
+    desc = data['description']
+    image = data['image']
+    pdf = data['pdf']
+    isTop = data['isTop']
+    id_ = data['id']
+    price = data['price']
+    query = "UPDATE offer SET title='{}', description='{}',price={}, image='{}', pdf='{}', isTop={} WHERE id ='{}'".format(title, desc, price, image, pdf, isTop, id_)
+    return send_query(query)
+
+@app.route('/offers', methods=['DELETE'])
+def delete_offer(): 
+    data = request.get_json()
+    # mozda postoji bolji nacin za ovo?
+    id_ = data['id']
+    query = "DELETE FROM offer WHERE id='{}'".format(id_)
+    return send_query(query)
+
+@app.route('/top-offers', methods=['GET'])
+def get_top_offers(): 
+    query = "SELECT * FROM offer WHERE isTop=true"
+    return send_query(query)
 
 
 ################################

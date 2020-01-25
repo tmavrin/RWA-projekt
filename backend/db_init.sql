@@ -16,10 +16,10 @@ GRANT ALL PRIVILEGES ON user TO 'duser'@'localhost';
 CREATE TABLE IF NOT EXISTS offer(
     id BINARY(36) NOT NULL UNIQUE DEFAULT uuid(),
     title VARCHAR(30) NOT NULL,
-    description VARCHAR(30) NOT NULL,
+    description VARCHAR(512) NOT NULL,
     price FLOAT(10) NOT NULL,
-    image VARCHAR(40),
-    pdf VARCHAR(40),
+    image VARCHAR(40) DEFAULT '',
+    pdf VARCHAR(40) DEFAULT '',
     isTop BOOLEAN DEFAULT FALSE
 );
 
