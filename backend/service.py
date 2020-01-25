@@ -23,11 +23,18 @@ def send_query(query):
     mysql.connection.commit()
     data = cur.fetchall()
     #print('Returning the following data: ' + str(data))
-    row_headers=[x[0] for x in cur.description]
-    json_data=[]
-    for result in data:
-            json_data.append(dict(zip(row_headers,result)))
-    return jsonify(json_data)
+
+    if cur.rowcount == 0:
+        return "failure"
+    if data:
+        row_headers=[x[0] for x in cur.description]
+        json_data=[]
+        for result in data:
+                json_data.append(dict(zip(row_headers,result)))
+        return jsonify(json_data)
+    else:
+        return "success"
+    
 
 
 ################################
@@ -65,15 +72,20 @@ def update_offerr():
 
 @app.route('/offers', methods=['DELETE'])
 def delete_offer(): 
-    data = request.get_json()
-    # mozda postoji bolji nacin za ovo?
-    id_ = data['id']
+    id_ = request.args.get('id')
     query = "DELETE FROM offer WHERE id='{}'".format(id_)
+    print(query)
     return send_query(query)
 
 @app.route('/top-offers', methods=['GET'])
 def get_top_offers(): 
     query = "SELECT * FROM offer WHERE isTop=true"
+    return send_query(query)
+
+@app.route('/top-offers', methods=['POST'])
+def set_top_offers():
+    id_ = request.args.get('id')
+    query = "UPDATE offer SET isTop=true WHERE id='{}'".format(id_)
     return send_query(query)
 
 
