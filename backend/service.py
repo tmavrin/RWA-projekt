@@ -1,30 +1,50 @@
 from flask import Flask, jsonify, request
 from flask_mysqldb import MySQL
 from flask_cors import CORS
+import os
 
 
 app = Flask(__name__)
 cors = CORS(app)
 
-with open('password.txt') as f:
-    mysql_passwd = f.readline().strip()
 
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = mysql_passwd
-app.config['MYSQL_DB'] = 'User'
+app.config['MYSQL_USER'] = 'duser'
+app.config['MYSQL_PASSWORD'] = 'duserpass'
+app.config['MYSQL_DB'] = 'agencija'
 app.debug = True
 
 mysql = MySQL(app)
 
 def send_query(query):
-    print('Query: ' + query)
+    #print('Query: ' + query)
     cur = mysql.connection.cursor()
     cur.execute(query)
     mysql.connection.commit()
     data = cur.fetchall()
-    print('Returning the following data: ' + str(data))
+    #print('Returning the following data: ' + str(data))
     return jsonify(data)
+
+
+################################
+##        OFFER METHODS       ##
+################################
+
+
+@app.route('/offers', methods=['GET'])
+def get_offers():
+    query = "SELECT * FROM offer"
+    return send_query(query)
+
+@app.route('/offers', methods=['POST'])
+def create_offer():
+    data = request.get_json()
+    title = data['title']
+    desc = data['description']
+    price = data['price']
+    query = "INSERT INTO offer (title,description,price) VALUES ('"+title+"','" + desc + "'," + price + ")"
+    return send_query(query)
+
 
 
 ################################
