@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DUMMY_OFFERS } from '../VO/Offer';
 
 @Component({
   selector: 'app-home',
@@ -6,26 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  topOffers = [
-    {
-      title: 'Culture Tour',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipiscing elit, class nulla integer tristique pellentesque fringilla',
-      image: 'assets/images/example_img1.png'
-    },
-    {
-      title: 'Country Tour',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipiscing elit, class nulla integer tristique pellentesque fringilla',
-      image: 'assets/images/example_img2.png'
-    },
-    {
-      title: 'Nature Tour',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipiscing elit, class nulla integer tristique pellentesque fringilla',
-      image: 'assets/images/example_img3.png'
-    }
-  ];
+  topOffers = DUMMY_OFFERS;
 
   constructor() {}
 

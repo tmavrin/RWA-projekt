@@ -10,6 +10,7 @@ import { OfferComponent } from './offer/offer.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { TopOfferComponent } from './home/top-offer/top-offer.component';
+import { DefaultOfferComponent } from './offer/default-offer/default-offer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TopOfferComponent } from './home/top-offer/top-offer.component';
     OfferComponent,
     ContactComponent,
     HomeComponent,
-    TopOfferComponent
+    TopOfferComponent,
+    DefaultOfferComponent
   ],
   imports: [
     BrowserModule,
