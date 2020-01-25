@@ -10,8 +10,20 @@
     />
     <ul class="flex_center_center">
       <!-- <li routerLink="gallery" class="pointer">Gallery</li> -->
-      <li routerLink="offer" class="pointer">Offer</li>
-      <li routerLink="contact" class="pointer">Contact</li>
+      <li
+        routerLink="offer"
+        class="pointer"
+        [ngClass]="{ selected: currentPath === '/offer' }"
+      >
+        Offer
+      </li>
+      <li
+        routerLink="contact"
+        class="pointer"
+        [ngClass]="{ selected: currentPath === '/contact' }"
+      >
+        Contact
+      </li>
     </ul>
   </div>
 </nav>
