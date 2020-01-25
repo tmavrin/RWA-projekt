@@ -24,5 +24,28 @@ CREATE TABLE IF NOT EXISTS offer(
 );
 
 GRANT ALL PRIVILEGES ON offer TO 'duser'@'localhost';
-FLUSH PRIVILEGES;
 
+
+CREATE TABLE LoginInfo
+(
+	Username CHAR(40) NOT NULL,
+	Password CHAR(40) NOT NULL,
+
+	PRIMARY KEY (Username)
+);
+
+GRANT ALL PRIVILEGES ON LoginInfo TO 'duser'@'localhost';
+
+CREATE TABLE Reviews
+(
+	TourID TINYINT NOT NULL,
+	Username CHAR(40) NOT NULL,
+	ReviewText VARCHAR(512) NOT NULL,
+
+	PRIMARY KEY (TourID, Username),
+	FOREIGN KEY (Username) REFERENCES LoginInfo(Username)
+);
+
+GRANT ALL PRIVILEGES ON Reviews TO 'duser'@'localhost';
+
+FLUSH PRIVILEGES;
