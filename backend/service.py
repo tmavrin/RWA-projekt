@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import json
@@ -25,7 +25,7 @@ def send_query(query):
     #print('Returning the following data: ' + str(data))
 
     if cur.rowcount == 0:
-        return "failure"
+        return "no result"
     if data:
         row_headers=[x[0] for x in cur.description]
         json_data=[]
@@ -36,6 +36,23 @@ def send_query(query):
         return "success"
     
 
+def check_request_body(json_data, *args):
+    try:
+        for i in args:
+            json_data[i]
+        return True
+    except:
+        return False
+
+def check_params(params, *args):
+    try:
+        for i in args:
+            if params.get(i) is None:
+                raise Exception()
+        return True
+    except:
+        return False
+
 
 ################################
 ##        OFFER METHODS       ##
@@ -44,49 +61,64 @@ def send_query(query):
 
 @app.route('/offers', methods=['GET'])
 def get_offers():
-    query = "SELECT * FROM offer"
+    query = "SELECT id,title,description,price,isTop,image,pdf FROM offer"
+    if (check_params(request.args, 'pageNo', 'itemNo')):
+        pageNo = request.args.get('pageNo')
+        itemNo = request.args.get('itemNo')
+        query += " LIMIT {},{}".format(int(pageNo)*int(itemNo), itemNo)
     return send_query(query)
 
 @app.route('/offers', methods=['POST'])
 def create_offer():
     data = request.get_json()
-    title = data['title']
-    desc = data['description']
-    price = data['price']
-    query = "INSERT INTO offer (title,description,price) VALUES ('{}','{}','{}')".format(title,desc,price)
-    return send_query(query)
+    if(check_request_body(data, 'title', 'description', 'price')):
+        title = data['title']
+        desc = data['description']
+        price = data['price']
+        query = "INSERT INTO offer (title,description,price) VALUES ('{}','{}','{}')".format(title,desc,price)
+        return send_query(query)
+    else:
+        abort(400, "missing properties from body")
 
 @app.route('/offers', methods=['PUT'])
 def update_offerr():
     data = request.get_json()
     # mozda postoji bolji nacin za ovo?
-    title = data['title']
-    desc = data['description']
-    image = data['image']
-    pdf = data['pdf']
-    isTop = data['isTop']
-    id_ = data['id']
-    price = data['price']
-    query = "UPDATE offer SET title='{}', description='{}',price={}, image='{}', pdf='{}', isTop={} WHERE id ='{}'".format(title, desc, price, image, pdf, isTop, id_)
-    return send_query(query)
+    if(check_request_body(data, 'title', 'description', 'price','isTop', 'id')):
+        title = data['title']
+        desc = data['description']
+        #image = data['image']
+        #pdf = data['pdf']
+        isTop = data['isTop']
+        id_ = data['id']
+        price = data['price']
+        query = "UPDATE offer SET title='{}', description='{}',price={}, isTop={} WHERE id ='{}'".format(title, desc, price, isTop, id_)
+        return send_query(query)
+    else:
+        abort(400, "missing properties from body")
 
 @app.route('/offers', methods=['DELETE'])
-def delete_offer(): 
-    id_ = request.args.get('id')
-    query = "DELETE FROM offer WHERE id='{}'".format(id_)
-    print(query)
-    return send_query(query)
+def delete_offer():
+    if(check_params(request.args, 'id')):
+        id_ = request.args.get('id')
+        query = "DELETE FROM offer WHERE id='{}'".format(id_)
+        return send_query(query)
+    else:
+        abort(400, "Missing id param")
 
 @app.route('/top-offers', methods=['GET'])
 def get_top_offers(): 
-    query = "SELECT * FROM offer WHERE isTop=true"
+    query = "SELECT id,title,description,price,isTop,image,pdf FROM offer WHERE isTop=true"
     return send_query(query)
 
 @app.route('/top-offers', methods=['POST'])
 def set_top_offers():
-    id_ = request.args.get('id')
-    query = "UPDATE offer SET isTop=true WHERE id='{}'".format(id_)
-    return send_query(query)
+    if(check_params(request.args, 'id')):
+        id_ = request.args.get('id')
+        query = "UPDATE offer SET isTop=true WHERE id='{}'".format(id_)
+        return send_query(query)
+    else:
+        abort(400, "Missing id param")
 
 
 ################################
