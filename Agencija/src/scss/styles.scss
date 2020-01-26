@@ -1,11 +1,13 @@
+@import 'keyframes.scss';
+
 @font-face {
   font-family: 'Oswald Light';
-  src: url('assets/fonts/Oswald-Light.ttf') format('truetype');
+  src: url('../assets/fonts/Oswald-Light.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Raleway Medium';
-  src: url('/assets/fonts/Raleway-Medium.ttf') format('truetype');
+  src: url('../assets/fonts/Raleway-Medium.ttf') format('truetype');
 }
 
 body {
@@ -64,6 +66,7 @@ button {
   text-transform: uppercase;
   font-size: 15px;
   font-weight: bold;
+  transform-origin: center;
 }
 
 .container {
