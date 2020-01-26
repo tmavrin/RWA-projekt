@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, abort, send_from_directory
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import json, os
+from datetime import datetime
 
 
 def create_app(test_config=None):
@@ -11,6 +12,8 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    last_restart= datetime.now()
 
     app.config['MYSQL_HOST'] = '172.17.0.4'
     app.config['MYSQL_USER'] = 'root'
@@ -282,15 +285,19 @@ def create_app(test_config=None):
         print('Returning the following data: ' + str(data[0]))
         return jsonify(count=data[0])
 
-    @app.route('/', methods=['GET'])
-    def greet():
-        return 'Sladoled!'
-
     @app.route('/show-reviews', methods=['GET'])
     def describe_review():
         query = 'SELECT * FROM  Reviews'
         return send_query(query)
 
+    @app.route('/', methods=['GET'])
+    def greet():
+        response = "<h2>Last restart: " + str(last_restart) + "</h2><br> <h2>Working Endpoints</h2>"\
+            + "<h3>/offers [GET,POST,PUT,DELETE]</h3><br>"\
+            + "<h3>/top-offer [GET,POST,DELETE]</h3><br>"\
+            + "<h3>/image [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>image</b> on upload.</p> <br>"\
+            + "<h3>/pdf [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>pdf</b> on upload.</p> <br>"
+        return response
 
 
     if __name__ == '__main__':
