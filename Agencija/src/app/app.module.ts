@@ -12,6 +12,9 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { TopOfferComponent } from './home/top-offer/top-offer.component';
 import { DefaultOfferComponent } from './offer/default-offer/default-offer.component';
+import { TestApiComponent } from './test-api/test-api.component';
+
+import { CoreService } from '../core/core.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { DefaultOfferComponent } from './offer/default-offer/default-offer.compo
     ContactComponent,
     HomeComponent,
     TopOfferComponent,
-    DefaultOfferComponent
+    DefaultOfferComponent,
+    TestApiComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,7 @@ import { DefaultOfferComponent } from './offer/default-offer/default-offer.compo
     HttpClientModule,
     AngularFontAwesomeModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ CoreService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -69,7 +69,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "Agencija:build",
-            "proxyConfig": "proxy/proxy.conf.json"
+            "proxyConfig": "src/core/proxy.conf.json"
           },
           "configurations": {
             "production": {

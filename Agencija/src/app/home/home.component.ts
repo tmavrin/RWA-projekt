@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DUMMY_OFFERS } from '../VO/Offer';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +6,7 @@ import { DUMMY_OFFERS } from '../VO/Offer';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  topOffers = DUMMY_OFFERS;
+  topOffers = [];
 
   constructor() {}
 
