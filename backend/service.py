@@ -84,24 +84,24 @@ def create_app(test_config=None):
             query = "INSERT INTO offer (title,description,price) VALUES ('{}','{}','{}')".format(title,desc,price)
             return send_query(query)
         else:
-            abort(400, "missing properties from body")
+            abort(400, "missing properties from body, REQUIRED: title, description, price")
 
     @app.route('/offers', methods=['PUT'])
     def update_offerr():
         data = request.get_json()
         # mozda postoji bolji nacin za ovo?
-        if(check_request_body(data, 'title', 'description', 'price','isTop', 'id')):
+        if(check_request_body(data, 'title', 'description', 'price', 'id')):
             title = data['title']
             desc = data['description']
             #image = data['image']
             #pdf = data['pdf']
-            isTop = data['isTop']
+            #isTop = data['isTop']
             id_ = data['id']
             price = data['price']
-            query = "UPDATE offer SET title='{}', description='{}',price={}, isTop={} WHERE id ='{}'".format(title, desc, price, isTop, id_)
+            query = "UPDATE offer SET title='{}', description='{}',price={} WHERE id ='{}'".format(title, desc, price, id_)
             return send_query(query)
         else:
-            abort(400, "missing properties from body")
+            abort(400, "missing properties from body, REQUIRED: title, description, price, id")
 
     @app.route('/offers', methods=['DELETE'])
     def delete_offer():
@@ -110,7 +110,7 @@ def create_app(test_config=None):
             query = "DELETE FROM offer WHERE id='{}'".format(id_)
             return send_query(query)
         else:
-            abort(400, "Missing id param")
+            abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/top-offers', methods=['GET'])
     def get_top_offers(): 
@@ -124,7 +124,16 @@ def create_app(test_config=None):
             query = "UPDATE offer SET isTop=true WHERE id='{}'".format(id_)
             return send_query(query)
         else:
-            abort(400, "Missing id param")
+            abort(400, "Missing id param, REQUIRED: id")
+
+    @app.route('/top-offers', methods=['DELETE'])
+    def remove_top_offers():
+        if(check_params(request.args, 'id')):
+	    id_ = request.args.get('id')
+	    query = "UPDATE offer SET isTop=false WHERE id='{}'".format(id_)
+            return send_query(query)
+        else:
+	    abort(400, "Missing id param, REQUIRED: id")
 
 
     ################################
