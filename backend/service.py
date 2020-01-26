@@ -138,21 +138,19 @@ def get_users():
 def create_user():
     username = request.form.get('username')
     password = request.form.get('password')
-    query = (f'INSERT INTO LoginInfo(Username, Password)  '
-            f'VALUES(\'{username}\', \'{password}\')')
+    query = "INSERT INTO LoginInfo(Username, Password) VALUES('{}','{}' )".format(username,password)
     return send_query(query)
 
 @app.route('/users', methods=['PUT'])
 def update_user_set_new_password():
     username = request.form.get('username')
     new_password = request.form.get('password')
-    query = (f'UPDATE LoginInfo SET Password=\'{new_password}\' '
-            f'WHERE username=\'{username}\'')
+    query = "UPDATE LoginInfo SET Password='{}' WHERE username='{}')".format(new_password,username)
     return send_query(query)
 
 @app.route('/users/<string:username>', methods=['DELETE'])
 def delete_user(username):
-    query = (f'DELETE FROM LoginInfo WHERE username=\'{username}\'')
+    query = "DELETE FROM LoginInfo WHERE username='{}')".format(username)
     return send_query(query)
 
 
@@ -163,7 +161,7 @@ def show_user_reviews():
     '''
     '''
     username = request.form.get('username')
-    query = (f'SELECT * FROM Reviews WHERE username=\'{username}\'')
+    query = "SELECT * FROM Reviews WHERE username='{}')".format(username)
     return send_query(query)
 
 @app.route('/create-review', methods=['POST'])
@@ -173,8 +171,7 @@ def create_review():
     tourid = request.form.get('tourid')
     username = request.form.get('username')
     review_text = request.form.get('review_text')
-    query = (f'INSERT INTO Reviews(TourID, Username, ReviewText)  '
-            f'VALUES({tourid}, \'{username}\', \'{review_text}\')')
+    query = "INSERT INTO Reviews(TourID, Username, ReviewText) VALUES({}, '{}', '{}')".format(tourid,username,review_text)
     return send_query(query)
 
 @app.route('/check-login', methods=['POST'])
@@ -186,9 +183,7 @@ def check_login():
     '''
     username = request.form.get('username')
     password = request.form.get('password')
-    query = (f'SELECT count(*) FROM LoginInfo WHERE '
-            f'username=\'{username}\' '
-            f'and password=\'{password}\'')
+    query = "SELECT count(*) FROM LoginInfo WHERE username='{}' and password='{}'')".format(username,password)
     print(query)
     cur = mysql.connection.cursor()
     cur.execute(query)
