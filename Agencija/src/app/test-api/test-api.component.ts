@@ -58,4 +58,11 @@ export class TestApiComponent implements OnInit {
       this.coreService.addOfferToTopList(o.id).subscribe( data2 => {}, error => { this.results = error.message; });
     }, error => { this.results = error.message; });
   }
+
+  removeTopOffer() {
+    this.coreService.getOffersByPage(0).subscribe( data => {
+      const o = data[2];
+      this.coreService.removeOfferFromTopList(o.id).subscribe( data2 => {}, error => { this.results = error.message; });
+    }, error => { this.results = error.message; });
+  }
 }

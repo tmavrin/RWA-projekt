@@ -75,7 +75,8 @@ export class CoreService {
     return this.http.post(this.backendUrl + '/top-offers', {}, { params });
   }
 
-  /* TODO ADD
-    removeOfferFromTopList(id: string) {}
-  */
+  removeOfferFromTopList(id: string) {
+    const params = new HttpParams().append('id', id);
+    return this.http.delete(this.backendUrl + '/top-offers', { params });
+  }
 }
