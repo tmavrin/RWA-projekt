@@ -129,3 +129,17 @@ button {
     }
   }
 }
+
+.background-image {
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+select, input {
+  text-indent: 12px;
+  font-size: 16px;
+  height: 35px;
+  border: none;
+  border-radius: 6px;
+}
