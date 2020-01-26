@@ -7,6 +7,11 @@ Note that route URLs for all methods except `DELETE` should contain only the nam
 For examples, check out the `DONE` section.  
 \* Adding pdfs to DB would be nice, but `NOT A PRIORITY`.
 
+## `DONE`
+
+#### Fixes
+* JSON format fix done.
+
 #### Get all offers
 route: `/offers`, method=`['GET']`  
 parameters:  
@@ -42,7 +47,6 @@ route: `/top-offers/tourId`, method=`['DELETE']`
 parameters:   
 purpose: Removes offer with specified tourId from the top offers list
 
-## `DONE`
 \* Should review the similarity between 'Get user by username' and 'Login'
 or how authentication is usually handled in similar cases.
 DB should not contain user passwords in raw form. 
