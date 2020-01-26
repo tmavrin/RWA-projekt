@@ -16,7 +16,7 @@ def create_app(test_config=None):
     app.config['MYSQL_USER'] = 'root'
     app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
     app.config['MYSQL_DB'] = 'agencija'
-    app.config['UPLOAD_FOLDER'] = 'uploaded_files/'
+    app.config['UPLOAD_FOLDER'] = 'uploads'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
     ALLOWED_EXTENSIONS_PDF = set(['pdf'])
