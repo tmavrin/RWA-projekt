@@ -1,0 +1,22 @@
+<div class="login flex_center_center background-image">
+  <div class="container blue-shadow">
+    <img
+      src="../../favicon.ico"
+      alt="logo"
+      height="30"
+      width="28"
+      routerLink=""
+      class="pointer"
+    />
+    <form [formGroup]="loginForm">
+      <p>Username</p>
+        <input type="text" formControlName="username"/>
+      <p>Password</p>
+        <input type="password" formControlName="password"/>
+
+      <p *ngIf="loginForm.invalid && showErrorMessage">Please enter username and password</p>
+
+      <button class="pointer" (click)="submit()">Login</button>
+    </form>
+  </div>
+</div>
