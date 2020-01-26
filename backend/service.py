@@ -161,7 +161,7 @@ def create_app(test_config=None):
                 filename = "{}.pdf".format(id_)
                 filelink = "pdf?id={}".format(id_)
                 query = "UPDATE offer SET pdf='{}' WHERE id='{}'".format(filelink,id_)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'+ "pdfs"], filename))
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/pdfs", filename))
                 return 'File successfully uploaded, {}'.format(send_query(query))
             else:
                 abort(400, 'Allowed file types are pdf')
@@ -203,7 +203,7 @@ def create_app(test_config=None):
             id_ = request.args.get('id')
             print(id_)
             uploads = os.path.join('', app.config['UPLOAD_FOLDER']+"/images")
-            pdf_file_name = "{}.pdf".format(id_)
+            pdf_file_name = "{}.png".format(id_)
             return send_from_directory(directory=uploads, filename=pdf_file_name)
         else:
             abort(400, "Missing id param, REQUIRED: id")
