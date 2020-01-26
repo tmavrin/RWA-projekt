@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreService } from '../../core/core.service';
 
 @Component({
   selector: 'app-offer',
@@ -6,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./offer.component.scss']
 })
 export class OfferComponent implements OnInit {
-  offers = [];
+  offers: any;
+  pageNo = 0;
 
-  constructor() {}
+  constructor(protected coreService: CoreService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getOffers();
+  }
+
+  getOffers() {
+    this.coreService.getOffersByPage(this.pageNo).subscribe(
+      data => { this.offers = data; },
+      error => { console.log(error.message); }
+    );
+  }
 }

@@ -15,8 +15,12 @@
   </div>
 </div>
 
-<div class="top-offers">
-  <h1 class="title-font">Our top offers</h1>
+<div #target class="top-offers">
+  <h1 id="scroll-me" class="title-font">
+    Our top offers
+    <fa id="fa" name="arrow-down" class="pointer"
+        (click)="target.scrollIntoView({behavior: 'smooth'})"></fa>
+  </h1>
   <div class="offer-box flex_space_around">
     <app-top-offer
       *ngFor="let offer of topOffers"
