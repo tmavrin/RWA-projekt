@@ -16,13 +16,17 @@ def create_app(test_config=None):
     app.config['MYSQL_USER'] = 'root'
     app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
     app.config['MYSQL_DB'] = 'agencija'
-    app.config['UPLOAD_FOLDER'] = 'pdfs/'
+    app.config['UPLOAD_FOLDER'] = 'uploaded_files/'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
-    ALLOWED_EXTENSIONS = set(['pdf'])
+    ALLOWED_EXTENSIONS_PDF = set(['pdf'])
+    ALLOWED_EXTENSIONS_IMG = set(['png'])
 
-    def allowed_file(filename):
-        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    def allowed_pdf(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PDF
+
+    def allowed_img(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_IMG
         
     app.debug = True
 
@@ -153,12 +157,12 @@ def create_app(test_config=None):
             if (request.files.get('pdf') == None):
                 abort(400, "No file under file key: `pdf`")
             file = request.files.get('pdf')
-            if file and allowed_file(file.filename):
+            if file and allowed_pdf(file.filename):
                 filename = "{}.pdf".format(id_)
                 filelink = "pdf?id={}".format(id_)
-		query = "UPDATE offer SET pdf='{}' WHERE id='{}'".format(filelink,id_)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-		return 'File successfully uploaded, {}'.format(send_query(query))
+                query = "UPDATE offer SET pdf='{}' WHERE id='{}'".format(filelink,id_)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'+ "pdfs"], filename))
+                return 'File successfully uploaded, {}'.format(send_query(query))
             else:
                 abort(400, 'Allowed file types are pdf')
         else:
@@ -169,11 +173,41 @@ def create_app(test_config=None):
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
             print(id_)
-            uploads = os.path.join('', app.config['UPLOAD_FOLDER'])
+            uploads = os.path.join('', app.config['UPLOAD_FOLDER'] + "/pdfs")
+            img_file_name = "{}.pdf".format(id_)
+            return send_from_directory(directory=uploads, filename=img_file_name)
+        else:
+            abort(400, "Missing id param, REQUIRED: id")
+
+    @app.route('/image', methods=['POST'])
+    def upload_image():
+        if(check_params(request.args, 'id')):
+            id_ = request.args.get('id')
+            if (request.files.get('image') == None):
+                abort(400, "No file under file key: `image`")
+            file = request.files.get('image')
+            if file and allowed_img(file.filename):
+                filename = "{}.png".format(id_)
+                filelink = "image?id={}".format(id_)
+                query = "UPDATE offer SET image='{}' WHERE id='{}'".format(filelink,id_)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/images", filename))
+                return 'File successfully uploaded, {}'.format(send_query(query))
+            else:
+                abort(400, 'Allowed file types are pdf')
+        else:
+            abort(400, "Missing id param, REQUIRED: id")
+
+    @app.route('/image', methods=['GET'])
+    def get_image():
+        if(check_params(request.args, 'id')):
+            id_ = request.args.get('id')
+            print(id_)
+            uploads = os.path.join('', app.config['UPLOAD_FOLDER']+"/images")
             pdf_file_name = "{}.pdf".format(id_)
             return send_from_directory(directory=uploads, filename=pdf_file_name)
         else:
             abort(400, "Missing id param, REQUIRED: id")
+
 
 
 
