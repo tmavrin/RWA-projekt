@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, send_from_directory
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import json, os
@@ -12,11 +12,18 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
     app.config['MYSQL_HOST'] = '172.17.0.4'
     app.config['MYSQL_USER'] = 'root'
     app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
     app.config['MYSQL_DB'] = 'agencija'
+    app.config['UPLOAD_FOLDER'] = 'pdfs/'
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
+    ALLOWED_EXTENSIONS = set(['pdf'])
+
+    def allowed_file(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        
     app.debug = True
 
     cors = CORS(app)
@@ -58,7 +65,6 @@ def create_app(test_config=None):
             return True
         except:
             return False
-
 
     ################################
     ##        OFFER METHODS       ##
@@ -129,11 +135,46 @@ def create_app(test_config=None):
     @app.route('/top-offers', methods=['DELETE'])
     def remove_top_offers():
         if(check_params(request.args, 'id')):
-	    id_ = request.args.get('id')
-	    query = "UPDATE offer SET isTop=false WHERE id='{}'".format(id_)
+            id_ = request.args.get('id')
+            query = "UPDATE offer SET isTop=false WHERE id='{}'".format(id_)
             return send_query(query)
         else:
-	    abort(400, "Missing id param, REQUIRED: id")
+            abort(400, "Missing id param, REQUIRED: id")
+
+
+    ################################
+    ##     File Upload METHODS    ##
+    ################################
+
+    @app.route('/pdf', methods=['POST'])
+    def upload_pdf():
+        if(check_params(request.args, 'id')):
+            id_ = request.args.get('id')
+            if (request.files.get('pdf') == None):
+                abort(400, "No file under file key: `pdf`")
+            file = request.files.get('pdf')
+            if file and allowed_file(file.filename):
+                filename = "{}.pdf".format(id_)
+                query = "UPDATE offers SET pdf={} WHERE id={}".format(filename,id_)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                return 'File successfully uploaded, {}'.format(send_query(query))
+            else:
+                abort(400, 'Allowed file types are pdf')
+        else:
+            abort(400, "Missing id param, REQUIRED: id")
+
+    @app.route('/pdf', methods=['GET'])
+    def download_pdf():
+        if(check_params(request.args, 'id')):
+            id_ = request.args.get('id')
+            print(id_)
+            uploads = os.path.join('', app.config['UPLOAD_FOLDER'])
+            pdf_file_name = "{}.pdf".format(id_)
+            return send_from_directory(directory=uploads, filename=pdf_file_name)
+            
+        else:
+            abort(400, "Missing id param, REQUIRED: id")
+
 
 
     ################################
