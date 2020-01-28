@@ -5,10 +5,10 @@ CREATE USER IF NOT EXISTS 'duser'@'localhost' IDENTIFIED BY 'duserpass';
 
 CREATE TABLE IF NOT EXISTS user (
     id BINARY(36) NOT NULL UNIQUE DEFAULT uuid(),
-    email VARCHAR(30) NOT NULL UNIQUE,
-    password VARCHAR(30) NOT NULL,
+    username VARCHAR(30) NOT NULL UNIQUE,
+    password VARCHAR(60) NOT NULL,
     authority VARCHAR(10) DEFAULT 'user',
-    PRIMARY KEY (id,email)
+    PRIMARY KEY (id,username)
 );
 
 GRANT ALL PRIVILEGES ON user TO 'duser'@'localhost';

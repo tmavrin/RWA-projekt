@@ -2,7 +2,11 @@ from flask import Flask, jsonify, request, abort, send_from_directory
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import json, os
+from flask_jwt import JWT, jwt_required, current_identity
 from datetime import datetime
+from werkzeug.security import safe_str_cmp
+from flask_bcrypt import Bcrypt
+
 
 
 def create_app(test_config=None):
@@ -21,9 +25,19 @@ def create_app(test_config=None):
     app.config['MYSQL_DB'] = 'agencija'
     app.config['UPLOAD_FOLDER'] = 'uploads'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+    app.config['SECRET_KEY'] = 'Jn1p4fc28XYv'
 
     ALLOWED_EXTENSIONS_PDF = set(['pdf'])
     ALLOWED_EXTENSIONS_IMG = set(['png'])
+
+    class User(object):
+        def __init__(self, id, username, password):
+            self.id = id
+            self.username = username
+            self.password = password
+
+        def __str__(self):
+            return "User(id='%s')" % self.id
 
     def allowed_pdf(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_PDF
@@ -35,23 +49,42 @@ def create_app(test_config=None):
 
     cors = CORS(app)
     mysql = MySQL(app)
+    bcrypt = Bcrypt(app)
 
     def send_query(query):
-        #print('Query: ' + query)
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+
+            mysql.connection.commit()
+            data = cur.fetchall()
+            if cur.rowcount == 0:
+                return "no result"
+            if data:
+                row_headers=[x[0] for x in cur.description]
+                json_data=[]
+                for result in data:
+                        json_data.append(dict(zip(row_headers, result)))
+                return jsonify(json_data)
+            else:
+                return "success"
+        except:
+            abort(409,"DB integrity error, probably duplicate")
+        
+
+    def send_query_(query):
         cur = mysql.connection.cursor()
         cur.execute(query)
         mysql.connection.commit()
         data = cur.fetchall()
-        #print('Returning the following data: ' + str(data))
-
         if cur.rowcount == 0:
             return "no result"
         if data:
             row_headers=[x[0] for x in cur.description]
             json_data=[]
             for result in data:
-                    json_data.append(dict(zip(row_headers,result)))
-            return jsonify(json_data)
+                    json_data.append(dict(zip(row_headers, result)))
+            return json_data
         else:
             return "success"
         
@@ -77,6 +110,33 @@ def create_app(test_config=None):
     ##        OFFER METHODS       ##
     ################################
 
+    def authenticate(username, password):
+        user = send_query_("SELECT id,username,password FROM user where username='{}'".format(username))[0]
+
+        if user and bcrypt.check_password_hash(user['password'], password):
+            return User(user['id'].decode('ascii'),user['username'],user['password'])
+
+    def identity(payload):
+        user_id = payload['identity']
+        return user_id
+      
+    jwt = JWT(app, authenticate, identity)
+
+    @app.route('/protected', methods=['GET'])
+    @jwt_required()
+    def protected():
+        return "JWT Token: VALID"
+
+    @app.route('/register', methods=['POST'])
+    def register_user():
+        if(check_request_body(request.get_json(), 'username', 'password')):
+            username = request.get_json()['username']
+            password = bcrypt.generate_password_hash(request.get_json()['password']).decode('utf-8')
+            query = "INSERT INTO user (username,password) VALUES('{}','{}')".format(username, password)
+            return send_query(query)
+        else:
+            abort(400, "missing properties from body, REQUIRED: username, password")
+
 
     @app.route('/offers', methods=['GET'])
     def get_offers():
@@ -88,6 +148,7 @@ def create_app(test_config=None):
         return send_query(query)
 
     @app.route('/offers', methods=['POST'])
+    @jwt_required()
     def create_offer():
         data = request.get_json()
         if(check_request_body(data, 'title', 'description', 'price')):
@@ -100,6 +161,7 @@ def create_app(test_config=None):
             abort(400, "missing properties from body, REQUIRED: title, description, price")
 
     @app.route('/offers', methods=['PUT'])
+    @jwt_required()
     def update_offerr():
         data = request.get_json()
         # mozda postoji bolji nacin za ovo?
@@ -117,6 +179,7 @@ def create_app(test_config=None):
             abort(400, "missing properties from body, REQUIRED: title, description, price, id")
 
     @app.route('/offers', methods=['DELETE'])
+    @jwt_required()
     def delete_offer():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -131,6 +194,7 @@ def create_app(test_config=None):
         return send_query(query)
 
     @app.route('/top-offers', methods=['POST'])
+    @jwt_required()
     def set_top_offers():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -140,6 +204,7 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/top-offers', methods=['DELETE'])
+    @jwt_required()
     def remove_top_offers():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -154,6 +219,7 @@ def create_app(test_config=None):
     ################################
 
     @app.route('/pdf', methods=['POST'])
+    @jwt_required()
     def upload_pdf():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -183,6 +249,7 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/image', methods=['POST'])
+    @jwt_required()
     def upload_image():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -296,7 +363,12 @@ def create_app(test_config=None):
             + "<h3>/offers [GET,POST,PUT,DELETE]</h3><br>"\
             + "<h3>/top-offer [GET,POST,DELETE]</h3><br>"\
             + "<h3>/image [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>image</b> on upload.</p> <br>"\
-            + "<h3>/pdf [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>pdf</b> on upload.</p> <br>"
+            + "<h3>/pdf [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>pdf</b> on upload.</p> <br>"\
+            + "<h2>JWT AUTHORIZATION</h2><br>"\
+            + "<h3>/auth [POST]</h2><br>"\
+            + "<h3>@jwt_required METHODS (registered user/admin only)</h2> <p>Every protected request needs to have Authorization: JWT -jwt_token- header.</p><br>"\
+            + "<p>Token can be retrieved from 'hostaddress/auth' with body params 'username' and 'password'. </p><br>"\
+            + "<p>All passswords are stored as <b>hash</b> in database. </p><br>"
         return response
 
 
