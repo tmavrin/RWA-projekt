@@ -16,6 +16,7 @@ import { DefaultOfferComponent } from './offer/default-offer/default-offer.compo
 import { TestApiComponent } from '../core/test-api/test-api.component';
 import { LoginComponent } from './login/login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { EditOfferComponent } from './admin-panel/edit-offer/edit-offer.component';
 
 import { CoreService } from '../core/core.service';
 
@@ -30,7 +31,8 @@ import { CoreService } from '../core/core.service';
     DefaultOfferComponent,
     TestApiComponent,
     LoginComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    EditOfferComponent
   ],
   imports: [
     BrowserModule,

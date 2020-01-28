@@ -1,0 +1,70 @@
+.container {
+  width: calc(100% - 50px);
+  padding: 15px 10px;
+  background: #FCFDDF !important;
+
+  div {
+    margin: 0 10px;
+  }
+}
+
+.container div:nth-child(1) {
+  width: 25%;
+  input {
+    width: 100%;
+  }
+}
+.container div:nth-child(2) {
+  width: 75%;
+}
+
+input:not([type="checkbox"]), textarea {
+  display: block;
+  margin: 10px 0;
+  background: #FDF19B;
+}
+
+textarea {
+  width: 100%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.star-rating {
+  font-family: 'FontAwesome', sans-serif;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  width: 26px !important;
+
+  input {
+    display: none;
+  }
+
+  &:not(:checked) {
+    label {
+      font-size: 26px;
+      color: #FFDF35;
+    }
+    label:before {
+      content: '\f006  ';
+    }
+    label:hover:before {
+        content: '\f005  ';
+    }
+  }
+
+  input:checked ~ label:before {
+    content: '\f005  ';
+  }
+}
+
+button {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  width: 100px;
+}

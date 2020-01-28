@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreService } from '../../core/core.service';
 
 @Component({
   selector: 'app-admin-panel',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPanelComponent implements OnInit {
 
-  constructor() { }
+  offers: any;
+  pageNo = 0;
+
+  constructor(protected coreService: CoreService) {}
 
   ngOnInit() {
+    this.getOffers();
   }
 
+  getOffers() {
+    this.coreService.getOffersByPage(this.pageNo, 15).subscribe(
+      data => { this.offers = data; },
+      error => { console.log(error.message); }
+    );
+  }
 }
