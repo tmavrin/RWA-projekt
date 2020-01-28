@@ -2,3 +2,24 @@
   margin: 50px auto;
   max-width: 800px;
 }
+
+.container {
+  padding: 15px 25px;
+  background: #FEFEEF;
+
+  h3 {
+    margin: 0;
+    font-weight: normal;
+    flex: 1;
+  }
+
+  fa {
+    margin: 0 5px;
+    color: #ffdf35;
+  }
+}
+
+button {
+  float: right;
+  margin: 0 25px 25px;
+}

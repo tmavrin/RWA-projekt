@@ -31,6 +31,11 @@ body {
   justify-content: center;
 }
 
+.flex_center {
+  display: flex;
+  align-items: center;
+}
+
 .flex_space_between {
   display: flex;
   justify-content: space-between;
@@ -71,6 +76,7 @@ button {
   font-size: 15px;
   font-weight: bold;
   transform-origin: center;
+  cursor: pointer;
 }
 
 .container {

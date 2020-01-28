@@ -1,4 +1,4 @@
-<form [formGroup]="editForm" class="container yellow-shadow flex_space_between">
+<form [formGroup]="editForm" class="flex_space_between">
 
   <div class="edit-image">
     <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer?.image }}" />
@@ -25,7 +25,7 @@
     <label>Price</label> <input type="text" formControlName="price">
     </div>
 
-    <button class="pointer" (click)="submit()">Save</button>
-
+    <button (click)="collapse.emit()" style="right: 140px">Cancel</button>
+    <button (click)="submit()" style="right: 25px">Save</button>
   </div>
 </form>

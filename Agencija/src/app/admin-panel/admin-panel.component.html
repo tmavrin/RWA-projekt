@@ -1,3 +1,15 @@
 <div class="result-box">
-  <app-edit-offer *ngFor="let o of offers" [offer]="o"></app-edit-offer>
+  <div *ngFor="let o of offers; let i = index" class="container yellow-shadow">
+
+    <div *ngIf="!expand[i]" class="flex_center">
+      <h3 class="uppercase">{{ o.title }}</h3>
+      <fa name="edit" size="2x" class="pointer" (click)="expandForm(i)"></fa>
+      <fa name="minus-square-o" size="2x" class="pointer" (click)="delete(i)"></fa>
+    </div>
+
+    <app-edit-offer *ngIf="expand[i]" [offer]="o" (collapse)="expand[i] = false"></app-edit-offer>
+
+  </div>
+
+  <button>Add new offer</button>
 </div>

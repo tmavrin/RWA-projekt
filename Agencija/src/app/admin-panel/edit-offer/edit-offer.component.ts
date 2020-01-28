@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Offer } from '../../../core/VO/Offer';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-offer',
@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class EditOfferComponent implements OnInit {
   // tslint:disable-next-line:no-input-rename
   @Input('offer') offer: Offer;
+  @Output() collapse = new EventEmitter();
   editForm: FormGroup;
   showErrorMessage = false;
 
