@@ -13,8 +13,9 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { TopOfferComponent } from './home/top-offer/top-offer.component';
 import { DefaultOfferComponent } from './offer/default-offer/default-offer.component';
-import { TestApiComponent } from './test-api/test-api.component';
+import { TestApiComponent } from '../core/test-api/test-api.component';
 import { LoginComponent } from './login/login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 import { CoreService } from '../core/core.service';
 
@@ -28,7 +29,8 @@ import { CoreService } from '../core/core.service';
     TopOfferComponent,
     DefaultOfferComponent,
     TestApiComponent,
-    LoginComponent
+    LoginComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,

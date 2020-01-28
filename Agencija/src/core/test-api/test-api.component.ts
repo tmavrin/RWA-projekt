@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Offer } from '../../core/VO/Offer';
-import { CoreService } from '../../core/core.service';
+import { Offer } from '../VO/Offer';
+import { CoreService } from '../core.service';
+import { User } from '../VO/User';
 
 @Component({
   selector: 'app-test-api',
@@ -15,6 +16,21 @@ export class TestApiComponent implements OnInit {
 
   ngOnInit() {
     this.results = 'start';
+  }
+
+  getUsers() {
+    this.coreService.getAllUsers().subscribe(data => {
+      this.results = data;
+      console.log(this.results);
+    }, error => { this.results = error.message; });
+  }
+
+  addUser() {
+    const u = new User('marina', 'boop');
+    this.coreService.addUser(u).subscribe(data => {
+      this.results = data;
+      console.log(this.results);
+    }, error => { this.results = error.message; });
   }
 
   getOffers() {

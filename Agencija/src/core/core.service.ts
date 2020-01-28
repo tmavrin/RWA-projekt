@@ -11,25 +11,25 @@ export class CoreService {
   private backendUrl = 'http://178.238.232.172:8080';
 
   constructor(private http: HttpClient) { }
-/*  TODO FIX
+
   getAllUsers() {
     return this.http.get(this.backendUrl + '/users');
   }
-
+  // TODO FIX
   getUserByUsername(username: string) {
     return this.http.get(this.backendUrl + '/users', {params: { username }});
   }
 
   addUser(user) {
     const httpParams = new HttpParams()
-      .append('email', user.email)
+      .append('username', user.username)
       .append('password', user.password);
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
     return this.http.post(this.backendUrl + '/users', user, {headers});
   }
 
-  changeUserPassword(user: User) {
+/*   changeUserPassword(user: User) {
     const httpParams = new HttpParams()
       .append('username', user.username)
       .append('password', user.password);
