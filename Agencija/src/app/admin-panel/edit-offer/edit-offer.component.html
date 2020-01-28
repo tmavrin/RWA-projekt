@@ -1,19 +1,31 @@
 <form [formGroup]="editForm" class="container yellow-shadow flex_space_between">
-  <div>
+
+  <div class="edit-image">
     <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer?.image }}" />
+
     <input type="file" formControlName="image">
   </div>
 
-  <div>
+  <div class="edit-text">
+
     <div class="star-rating">
       <input type="checkbox" formControlName="isTop" id="{{ offer.id }}" />
       <label for="{{ offer.id }}" class="pointer"></label>
     </div>
 
-    <input type="text" formControlName="title">
-    <textarea formControlName="description"></textarea>
-    <input type="file" formControlName="pdf">
-    <input type="text" formControlName="price">
+    <input type="text" formControlName="title" class="uppercase">
+
+    <textarea formControlName="description" rows="4"></textarea>
+
+    <div>
+    <label>Plan i program</label> <input type="file" formControlName="pdf">
+    </div>
+
+    <div>
+    <label>Price</label> <input type="text" formControlName="price">
+    </div>
+
     <button class="pointer" (click)="submit()">Save</button>
+
   </div>
 </form>
