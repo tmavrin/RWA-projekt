@@ -1,26 +1,26 @@
 <nav>
   <div class="flex_space_between">
     <img
-      src="../../favicon.ico"
+      src="../../../favicon.ico"
       alt="logo"
       height="30"
       width="28"
-      routerLink=""
+      [routerLink]="['/']"
       class="pointer"
     />
     <ul class="flex_center_center">
       <!-- <li routerLink="gallery" class="pointer">Gallery</li> -->
       <li
-        routerLink="offer"
+        [routerLink]="['/offer']"
         class="pointer"
-        [ngClass]="{ selected: currentPath === '/offer' }"
+        routerLinkActive="selected"
       >
         Offer
       </li>
       <li
-        routerLink="contact"
+        [routerLink]="['/contact']"
         class="pointer"
-        [ngClass]="{ selected: currentPath === '/contact' }"
+        routerLinkActive="selected"
       >
         Contact
       </li>

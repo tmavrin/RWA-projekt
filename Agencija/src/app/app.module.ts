@@ -8,7 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarUserComponent } from './navbar/navbar-user/navbar-user.component';
+import { NavbarAdminComponent } from './navbar/navbar-admin/navbar-admin.component';
 import { OfferComponent } from './offer/offer.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
@@ -26,7 +27,8 @@ import { AuthTokenService } from '../core/auth-token.service';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
+    NavbarUserComponent,
+    NavbarAdminComponent,
     OfferComponent,
     ContactComponent,
     HomeComponent,

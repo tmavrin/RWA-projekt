@@ -20,6 +20,19 @@ body {
   box-sizing: border-box;
 }
 
+app-navbar-user, app-navbar-admin {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+nav div {
+  margin: 0 auto;
+  width: 90vw;
+  align-items: center;
+  height: 50px;
+}
+
 .title-font {
   font-family: 'Oswald Light', sans-serif;
   letter-spacing: 1px;

@@ -2,11 +2,11 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  selector: 'app-navbar-user',
+  templateUrl: './navbar-user.component.html',
+  styleUrls: ['./navbar-user.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarUserComponent implements OnInit {
   currentPath: string;
 
   constructor(private router: Router) {}
