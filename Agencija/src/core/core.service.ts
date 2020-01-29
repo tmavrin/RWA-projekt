@@ -7,10 +7,9 @@ import { Offer } from './VO/Offer';
   providedIn: 'root'
 })
 export class CoreService {
-
   private backendUrl = 'http://178.238.232.172:8080';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(user: User) {
     const headers = new HttpHeaders();
@@ -51,7 +50,7 @@ export class CoreService {
   getTopList() {
     return this.http.get(this.backendUrl + '/top-offers');
   }
-/*
+  /*
   addOfferToTopList(id: string) {
     const params = new HttpParams().append('id', id);
     return this.http.post(this.backendUrl + '/top-offers', {}, { params });
@@ -63,7 +62,8 @@ export class CoreService {
   }
 */
   uploadPdf(id: string, pdf: File) {
-    const formData = new FormData().append('pdf', pdf, pdf.name);
+    const formData = new FormData();
+    formData.append('pdf', pdf, pdf.name);
     const params = new HttpParams().append('id', id);
     return this.http.post(this.backendUrl + '/pdf', formData, { params });
   }
