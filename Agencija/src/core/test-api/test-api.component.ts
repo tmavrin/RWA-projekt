@@ -19,7 +19,7 @@ export class TestApiComponent implements OnInit {
   }
 
   getUsers() {
-    this.coreService.getAllUsers().subscribe(data => {
+    this.coreService.getUser('marina', 'boop').subscribe(data => {
       this.results = data;
       console.log(this.results);
     }, error => { this.results = error.message; });

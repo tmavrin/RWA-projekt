@@ -12,36 +12,21 @@ export class CoreService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUsers() {
-    return this.http.get(this.backendUrl + '/users');
-  }
-  // TODO FIX
-  getUserByUsername(username: string) {
-    return this.http.get(this.backendUrl + '/users', {params: { username }});
+  getUser(username: string, password: string) {
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json; charset=utf-8');
+    return this.http.post(this.backendUrl + '/auth', {username, password}, { headers });
   }
 
   addUser(user) {
-    const httpParams = new HttpParams()
+    /*const httpParams = new HttpParams()
       .append('username', user.username)
-      .append('password', user.password);
+      .append('password', user.password);*/
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
-    return this.http.post(this.backendUrl + '/users', user, {headers});
+    return this.http.post(this.backendUrl + '/register', {username: user.username, password: user.password}, { headers });
   }
 
-/*   changeUserPassword(user: User) {
-    const httpParams = new HttpParams()
-      .append('username', user.username)
-      .append('password', user.password);
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json; charset=utf-8');
-    return this.http.put(this.backendUrl + '/users', httpParams, {headers});
-  }
-
-  deleteUser(username: string) {
-    return this.http.delete(this.backendUrl + '/users/' + username);
-  }
-*/
   getOffersByPage(pageNo: number, itemNo = 3) {
     const params = new HttpParams()
       .append('pageNo', String(pageNo))
