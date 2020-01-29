@@ -1,5 +1,6 @@
 <div class="offers-header">
   <div class="filter-box flex_space_between">
+    <!--
     <div class="filter-input">
       <p class="title-font">Kategorija</p>
       <select>
@@ -24,24 +25,32 @@
       <p class="title-font">Max Cijena</p>
       <input type="text" />
     </div>
-  </div>
-
+  --></div>
 
   <div class="sort-box flex_space_between">
     <p><b>Sortiraj po:</b></p>
 
-    <div class="flex_center_center">
+    <div
+      class="flex_center_center cijena"
+      [ngClass]="{ selected: sortCijena }"
+      (click)="orderPrice(); search()"
+    >
       <span>CIJENI</span>
-      <fa name="angle-double-up" size="2x" class="pointer"></fa>
+      <fa
+        [ngClass]="{ rotated: !sortAsc }"
+        name="angle-double-up"
+        size="2x"
+        class="pointer"
+      ></fa>
     </div>
-
+    <!--
     <div class="flex_center_center">
       <span>DATUMU POLASKA</span>
       <fa name="angle-double-up" size="2x" class="pointer"></fa>
     </div>
-
+    -->
     <div class="search-offer flex_end">
-      <input type="text" />
+      <input type="text" (input)="search($event)" />
       <fa name="search" size="lg" class="pointer"></fa>
     </div>
   </div>

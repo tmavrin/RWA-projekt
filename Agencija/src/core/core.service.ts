@@ -23,10 +23,20 @@ export class CoreService {
     return this.http.post(this.backendUrl + '/register', user, { headers });
   }
 
-  getOffersByPage(pageNo: number, itemNo = 3) {
-    const params = new HttpParams()
-      .append('pageNo', String(pageNo))
-      .append('itemNo', String(itemNo));
+  getOffersByPage(pageNo: number, itemNo = 3, searchQuery = '', priceSort?) {
+    let params;
+    if (priceSort !== undefined) {
+      params = new HttpParams()
+        .append('pageNo', String(pageNo))
+        .append('itemNo', String(itemNo))
+        .append('q', searchQuery)
+        .append('price', priceSort ? '0' : '1');
+    } else {
+      params = new HttpParams()
+        .append('pageNo', String(pageNo))
+        .append('itemNo', String(itemNo))
+        .append('q', searchQuery);
+    }
     return this.http.get(this.backendUrl + '/offers', { params });
   }
 

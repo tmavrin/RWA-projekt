@@ -1,6 +1,6 @@
 .offers-header {
-
-  select, input {
+  select,
+  input {
     width: 80%;
     max-width: 275px;
     background: white;
@@ -43,4 +43,18 @@
 .result-box {
   margin: 50px auto;
   max-width: 800px;
+}
+
+.cijena.selected {
+  background: #0000003a;
+}
+
+.cijena {
+  fa {
+    transition: transform 0.4s ease;
+  }
+}
+
+.rotated {
+  transform: rotate(180deg);
 }

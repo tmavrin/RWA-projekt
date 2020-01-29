@@ -185,18 +185,6 @@ def create_app(test_config=None):
                 query += " ORDER BY price DESC"
             elif price == 0:
                 query += " ORDER BY price ASC"
-        if (check_params(request.args, 'polazak')):
-            polazak = request.args.get('polazak')
-            if polazak == 1:
-                query += " ORDER BY polazak DESC"
-            elif polazak == 0:
-                query += " ORDER BY polazak ASC"
-        if (check_params(request.args, 'povratak')):
-            polazak = request.args.get('povratak')
-            if polazak == 1:
-                query += " ORDER BY povratak DESC"
-            elif polazak == 0:
-                query += " ORDER BY povratak ASC"
         if (check_params(request.args, 'pageNo', 'itemNo')):
             pageNo = request.args.get('pageNo')
             itemNo = request.args.get('itemNo')
