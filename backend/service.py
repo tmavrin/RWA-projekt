@@ -19,9 +19,14 @@ def create_app(test_config=None):
 
     last_restart= datetime.now()
 
-    app.config['MYSQL_HOST'] = 'localhost'
-    app.config['MYSQL_USER'] = 'duser'
-    app.config['MYSQL_PASSWORD'] = 'duserpass'
+    app.config['MYSQL_HOST'] = '172.17.0.2'
+    app.config['MYSQL_USER'] = 'root'
+    app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
+
+    #app.config['MYSQL_HOST'] = 'localhost'
+    #app.config['MYSQL_USER'] = 'duser'
+    #app.config['MYSQL_PASSWORD'] = 'duserpass'
+
     app.config['MYSQL_DB'] = 'agencija'
     app.config['UPLOAD_FOLDER'] = 'uploads'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
