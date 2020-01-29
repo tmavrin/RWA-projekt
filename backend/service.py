@@ -6,6 +6,7 @@ from flask_jwt import JWT, jwt_required, current_identity
 from datetime import datetime
 from werkzeug.security import safe_str_cmp
 from flask_bcrypt import Bcrypt
+from flask.logging import create_logger
 
 
 
@@ -18,7 +19,6 @@ def create_app(test_config=None):
         pass
 
     last_restart= datetime.now()
-
     app.config['MYSQL_HOST'] = '172.17.0.2'
     app.config['MYSQL_USER'] = 'root'
     app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
@@ -55,7 +55,7 @@ def create_app(test_config=None):
     cors = CORS(app)
     mysql = MySQL(app)
     bcrypt = Bcrypt(app)
-
+    LOG = create_logger(app)
 
 
     ################################
@@ -64,13 +64,13 @@ def create_app(test_config=None):
 
     @app.before_request
     def logRequest():
-        print("---------------------------------------------------------------------------")
-        print(request.headers)
-        print("Body:")
-        print(str(request.get_json()))
-        print("Args:")
-        print(str(request.url))
-        print("---------------------------------------------------------------------------")
+        LOG.debug("---------------------------------------------------------------------------")
+        LOG.debug(request.headers)
+        LOG.debug("Body:")
+        LOG.debug(str(request.get_json()))
+        LOG.debug("Args:")
+        LOG.debug(str(request.url))
+        LOG.debug("---------------------------------------------------------------------------")
 
     def send_query(query):
         try:
@@ -205,7 +205,7 @@ def create_app(test_config=None):
         if (check_params(request.args, 'pageNo', 'itemNo')):
             pageNo = request.args.get('pageNo')
             itemNo = request.args.get('itemNo')
-            query += " LIMIT {},{}".format(int(pageNo)*int(itemNo), itemNo)
+            query += " LIMIT {},{}".format(int(pageNo) * int(itemNo), itemNo)
         return send_query(query)
 
     @app.route('/offers', methods=['POST'])
