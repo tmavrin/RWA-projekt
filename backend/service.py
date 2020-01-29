@@ -19,9 +19,9 @@ def create_app(test_config=None):
 
     last_restart= datetime.now()
 
-    app.config['MYSQL_HOST'] = '172.17.0.4'
-    app.config['MYSQL_USER'] = 'root'
-    app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
+    app.config['MYSQL_HOST'] = 'localhost'
+    app.config['MYSQL_USER'] = 'duser'
+    app.config['MYSQL_PASSWORD'] = 'duserpass'
     app.config['MYSQL_DB'] = 'agencija'
     app.config['UPLOAD_FOLDER'] = 'uploads'
     app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -254,6 +254,10 @@ def create_app(test_config=None):
             if file and allowed_pdf(file.filename):
                 filename = "{}.pdf".format(id_)
                 filelink = "pdf?id={}".format(id_)
+                exists = send_query_("SELECT * FROM offer WHERE id='{}'").format(id_)
+                if (exists == "no result"):
+                    abort(400,"Invalid id")
+
                 query = "UPDATE offer SET pdf='{}' WHERE id='{}'".format(filelink,id_)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/pdfs", filename))
                 return 'File successfully uploaded, {}'.format(send_query(query))
@@ -284,11 +288,16 @@ def create_app(test_config=None):
             if file and allowed_img(file.filename):
                 filename = "{}.png".format(id_)
                 filelink = "image?id={}".format(id_)
+
+                exists = send_query_("SELECT * FROM offer WHERE id='{}'").format(id_)
+                if (exists == "no result"):
+                    abort(400,"Invalid id")
+
                 query = "UPDATE offer SET image='{}' WHERE id='{}'".format(filelink,id_)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/images", filename))
                 return 'File successfully uploaded, {}'.format(send_query(query))
             else:
-                abort(400, 'Allowed file types are pdf')
+                abort(400, 'Allowed file types are png')
         else:
             abort(400, "Missing id param, REQUIRED: id")
 
