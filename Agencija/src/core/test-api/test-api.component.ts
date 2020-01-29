@@ -68,7 +68,7 @@ export class TestApiComponent implements OnInit {
       console.log(this.results);
     }, error => { this.results = error.message; });
   }
-
+/*
   addTopOffer() {
     this.coreService.getOffersByPage(3).subscribe( data => {
       const o = data[0];
@@ -82,4 +82,5 @@ export class TestApiComponent implements OnInit {
       this.coreService.removeOfferFromTopList(o.id).subscribe( data2 => {}, error => { this.results = error.message; });
     }, error => { this.results = error.message; });
   }
+ */
 }

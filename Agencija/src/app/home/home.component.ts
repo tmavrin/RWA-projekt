@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CoreService } from '../../core/core.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { CoreService } from '../../core/core.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   topOffers: any;
 
   constructor(protected coreService: CoreService) {}
@@ -14,6 +14,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     window.addEventListener('scroll', this.changeStyleOnScroll, true);
     this.getTopOffers();
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.changeStyleOnScroll, true);
   }
 
   getTopOffers() {

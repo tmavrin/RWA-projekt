@@ -195,10 +195,10 @@ def create_app(test_config=None):
             desc = data['description']
             #image = data['image']
             #pdf = data['pdf']
-            #isTop = data['isTop']
+            isTop = data['isTop']
             id_ = data['id']
             price = data['price']
-            query = "UPDATE offer SET title='{}', description='{}',price={} WHERE id ='{}'".format(title, desc, price, id_)
+            query = "UPDATE offer SET title='{}', description='{}', price='{}', isTop='{}' WHERE id ='{}'".format(title, desc, price, isTop, id_)
             return send_query(query)
         else:
             abort(400, "missing properties from body, REQUIRED: title, description, price, id")
@@ -217,7 +217,7 @@ def create_app(test_config=None):
     def get_top_offers(): 
         query = "SELECT id,title,description,price,isTop,image,pdf FROM offer WHERE isTop=true"
         return send_query(query)
-
+"""
     @app.route('/top-offers', methods=['POST'])
     @jwt_required()
     def set_top_offers():
@@ -237,7 +237,7 @@ def create_app(test_config=None):
             return send_query(query)
         else:
             abort(400, "Missing id param, REQUIRED: id")
-
+"""
 
 
     ################################

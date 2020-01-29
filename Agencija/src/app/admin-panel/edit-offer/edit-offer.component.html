@@ -3,7 +3,7 @@
   <div class="edit-image">
     <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer?.image }}" />
 
-    <input type="file" formControlName="image">
+    <input type="file" (change)="onFileChange($event, 'png')">
   </div>
 
   <div class="edit-text">
@@ -18,7 +18,7 @@
     <textarea formControlName="description" rows="4"></textarea>
 
     <div>
-    <label>Plan i program</label> <input type="file" formControlName="pdf">
+    <label>Plan i program</label> <input type="file" (change)="onFileChange($event, 'pdf')">
     </div>
 
     <div>

@@ -1,9 +1,9 @@
 export class Offer {
   description: string;
   id: string;
-  image: string;
+  image: any;
   isTop: number;
-  pdf: string;
+  pdf: any;
   price: number;
   title: string;
 
