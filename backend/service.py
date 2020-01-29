@@ -19,13 +19,14 @@ def create_app(test_config=None):
         pass
 
     last_restart= datetime.now()
-    app.config['MYSQL_HOST'] = '172.17.0.2'
-    app.config['MYSQL_USER'] = 'root'
-    app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
+    
+    #app.config['MYSQL_HOST'] = '172.17.0.2'
+    #app.config['MYSQL_USER'] = 'root'
+    #app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
 
-    #app.config['MYSQL_HOST'] = 'localhost'
-    #app.config['MYSQL_USER'] = 'duser'
-    #app.config['MYSQL_PASSWORD'] = 'duserpass'
+    app.config['MYSQL_HOST'] = 'localhost'
+    app.config['MYSQL_USER'] = 'duser'
+    app.config['MYSQL_PASSWORD'] = 'duserpass'
 
     app.config['MYSQL_DB'] = 'agencija'
     app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -64,13 +65,7 @@ def create_app(test_config=None):
 
     @app.before_request
     def logRequest():
-        LOG.debug("---------------------------------------------------------------------------")
         LOG.debug(request.headers)
-        LOG.debug("Body:")
-        LOG.debug(str(request.get_json()))
-        LOG.debug("Args:")
-        LOG.debug(str(request.url))
-        LOG.debug("---------------------------------------------------------------------------")
 
     def send_query(query):
         try:
@@ -207,6 +202,12 @@ def create_app(test_config=None):
             itemNo = request.args.get('itemNo')
             query += " LIMIT {},{}".format(int(pageNo) * int(itemNo), itemNo)
         return send_query(query)
+    
+    @app.route('/offers-count', methods=['GET'])
+    def get_number_of_offers():
+        query = "SELECT COUNT(*) as count FROM offer"
+        data = send_query_(query)
+        return jsonify(data[0])
 
     @app.route('/offers', methods=['POST'])
     #@jwt_required()
