@@ -57,6 +57,16 @@ def create_app(test_config=None):
     ##       GLOBAL METHODS       ##
     ################################
 
+    @app.before_request
+    def logRequest():
+        print("---------------------------------------------------------------------------")
+        print(request.headers)
+        print("Body:")
+        print(str(request.get_json()))
+        print("Args:")
+        print(str(request.url))
+        print("---------------------------------------------------------------------------")
+
     def send_query(query):
         try:
             cur = mysql.connection.cursor()
@@ -166,6 +176,27 @@ def create_app(test_config=None):
     @app.route('/offers', methods=['GET'])
     def get_offers():
         query = "SELECT id,title,description,price,isTop,image,pdf FROM offer"
+        if (check_params(request.args, 'q')):
+            search = request.args.get('q')
+            query += " WHERE title LIKE '%{}%' OR description LIKE '%{}%'".format(search, search)
+        if (check_params(request.args, 'price')):
+            price = request.args.get('price')
+            if price == 1:
+                query += " ORDER BY price DESC"
+            elif price == 0:
+                query += " ORDER BY price ASC"
+        if (check_params(request.args, 'polazak')):
+            polazak = request.args.get('polazak')
+            if polazak == 1:
+                query += " ORDER BY polazak DESC"
+            elif polazak == 0:
+                query += " ORDER BY polazak ASC"
+        if (check_params(request.args, 'povratak')):
+            polazak = request.args.get('povratak')
+            if polazak == 1:
+                query += " ORDER BY povratak DESC"
+            elif polazak == 0:
+                query += " ORDER BY povratak ASC"
         if (check_params(request.args, 'pageNo', 'itemNo')):
             pageNo = request.args.get('pageNo')
             itemNo = request.args.get('itemNo')

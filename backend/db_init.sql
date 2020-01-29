@@ -20,7 +20,10 @@ CREATE TABLE IF NOT EXISTS offer(
     price FLOAT(10) NOT NULL,
     image VARCHAR(40) DEFAULT '',
     pdf VARCHAR(40) DEFAULT '',
-    isTop BOOLEAN DEFAULT FALSE
+    isTop BOOLEAN DEFAULT FALSE,
+    polazak TIMESTAMP,
+    povratak TIMESTAMP,
+    PRIMARY KEY(id)
 );
 
 GRANT ALL PRIVILEGES ON offer TO 'duser'@'localhost';
