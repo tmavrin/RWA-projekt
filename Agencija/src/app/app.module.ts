@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -17,6 +17,7 @@ import { TestApiComponent } from '../core/test-api/test-api.component';
 import { LoginComponent } from './login/login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { EditOfferComponent } from './admin-panel/edit-offer/edit-offer.component';
+import { AuthTokenService } from '../core/auth-token.service';
 
 import { CoreService } from '../core/core.service';
 
@@ -41,7 +42,10 @@ import { CoreService } from '../core/core.service';
     AngularFontAwesomeModule,
     ReactiveFormsModule
   ],
-  providers: [ CoreService ],
-  bootstrap: [ AppComponent ]
+  providers: [
+    CoreService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthTokenService, multi: true }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
