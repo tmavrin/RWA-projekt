@@ -1,5 +1,7 @@
 <div class="result-box">
-  <div *ngFor="let o of offers; let i = index" class="container yellow-shadow">
+  <div *ngFor="let o of offers; let i = index"
+       class="container yellow-shadow"
+       [@expand]="expand[i] ? 'expanded' : 'collapsed'">
 
     <div *ngIf="!expand[i]" class="flex_center">
       <h3 class="uppercase">{{ o.title }}</h3>
