@@ -15,3 +15,9 @@
 
   <button>Add new offer</button>
 </div>
+
+<app-pagination [max]="maxPage"
+                [current]="currentPage"
+                (get)="getOffers($event)"
+                class="flex_center_center">
+</app-pagination>

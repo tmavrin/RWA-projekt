@@ -1,0 +1,15 @@
+div {
+  margin: 30px auto 70px;
+  display: inline-block;
+}
+
+button {
+  margin: 0 7px;
+  border: none;
+  height: 35px;
+  width: 35px;
+  background: #E5E5E5;
+}
+button.current {
+  background: #FFDF35;
+}

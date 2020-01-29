@@ -17,24 +17,28 @@ import { CoreService } from '../../core/core.service';
 export class AdminPanelComponent implements OnInit {
 
   offers: any;
-  pageNo = 0;
+  maxPage = 0;
+  currentPage = 0;
   expand = [];
+
   constructor(protected coreService: CoreService) {}
 
   ngOnInit() {
-    this.getOffers();
+    this.coreService.getNumberOfOffers().subscribe(data => {
+      this.maxPage = Math.ceil(JSON.parse(JSON.stringify(data)).count / 5);
+    }, error => { console.log(error.message); });
+
+    this.getOffers(0);
   }
 
-  getOffers() {
-    this.coreService.getOffersByPage(this.pageNo, 15).subscribe(
-      data => {
-        this.offers = data;
-        for (let i = 0; i < this.offers.length; i++) {
-          this.expand[i] = false;
-        }
-      },
-      error => { console.log(error.message); }
-    );
+  getOffers(pageNo) {
+    this.currentPage = pageNo;
+    this.coreService.getOffersByPage(pageNo, 5).subscribe(data => {
+      this.offers = data;
+      for (let i = 0; i < this.offers.length; i++) {
+        this.expand[i] = false;
+      }
+    }, error => { console.log(error.message); });
   }
 
   expandForm(j) {

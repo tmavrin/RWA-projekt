@@ -1,0 +1,8 @@
+<div>
+  <button *ngFor="let item of array(); let i = index;"
+          (click)="get.emit(i)"
+          class="pagination"
+          [class.current]="current === i">
+    {{ i+1 }}
+  </button>
+</div>

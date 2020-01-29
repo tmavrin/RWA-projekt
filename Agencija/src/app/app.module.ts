@@ -18,9 +18,10 @@ import { TestApiComponent } from '../core/test-api/test-api.component';
 import { LoginComponent } from './login/login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { EditOfferComponent } from './admin-panel/edit-offer/edit-offer.component';
-import { AuthTokenService } from '../core/auth-token.service';
+import { PaginationComponent } from './pagination/pagination.component';
 
 import { CoreService } from '../core/core.service';
+import { AuthTokenService } from '../core/auth-token.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { CoreService } from '../core/core.service';
     TestApiComponent,
     LoginComponent,
     AdminPanelComponent,
-    EditOfferComponent
+    EditOfferComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

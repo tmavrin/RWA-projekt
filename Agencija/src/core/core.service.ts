@@ -23,6 +23,10 @@ export class CoreService {
     return this.http.post(this.backendUrl + '/register', user, { headers });
   }
 
+  getNumberOfOffers() {
+    return this.http.get(this.backendUrl + '/offers-count');
+  }
+
   getOffersByPage(pageNo: number, itemNo = 3, searchQuery = '', priceSort?) {
     let params;
     if (priceSort !== undefined) {
