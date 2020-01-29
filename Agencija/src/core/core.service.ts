@@ -64,21 +64,18 @@ export class CoreService {
   getTopList() {
     return this.http.get(this.backendUrl + '/top-offers');
   }
-  /*
-  addOfferToTopList(id: string) {
-    const params = new HttpParams().append('id', id);
-    return this.http.post(this.backendUrl + '/top-offers', {}, { params });
-  }
 
-  removeOfferFromTopList(id: string) {
-    const params = new HttpParams().append('id', id);
-    return this.http.delete(this.backendUrl + '/top-offers', { params });
-  }
-*/
   uploadPdf(id: string, pdf: File) {
     const formData = new FormData();
     formData.append('pdf', pdf, pdf.name);
     const params = new HttpParams().append('id', id);
     return this.http.post(this.backendUrl + '/pdf', formData, { params });
+  }
+
+  uploadImage(id: string, image: File) {
+    const formData = new FormData();
+    formData.append('pdf', image, image.name);
+    const params = new HttpParams().append('id', id);
+    return this.http.post(this.backendUrl + '/image', formData, { params });
   }
 }

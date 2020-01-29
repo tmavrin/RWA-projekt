@@ -25,9 +25,12 @@
     padding: 0 5%;
     background: #ffef9f;
 
+    p {
+      margin-right: 20px;
+    }
     span {
       display: inline-block;
-      margin-left: 40px;
+      margin-left: 20px;
     }
     .search-offer {
       flex: 1;

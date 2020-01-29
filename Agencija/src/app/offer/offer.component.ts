@@ -27,20 +27,22 @@ export class OfferComponent implements OnInit {
 
   getOffers(pageNo) {
     this.currentPage = pageNo;
-    this.coreService.getOffersByPage(pageNo, 3).subscribe(
-      data => {
+    if (this.sortCijena) {
+      this.coreService.getOffersByPage(pageNo, 3, '', this.sortAsc).subscribe(data => {
         this.offers = data;
-      },
-      error => {
-        console.log(error.message);
-      }
-    );
+      }, error => { console.log(error.message); });
+    } else {
+      this.coreService.getOffersByPage(pageNo, 3).subscribe(data => {
+        this.offers = data;
+      }, error => { console.log(error.message); });
+    }
   }
 
   search(event: any) {
     if (event) {
       this.searchQ = event.target.value;
     }
+    this.currentPage = 0;
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(() => {
       if (this.sortCijena) {
@@ -60,6 +62,7 @@ export class OfferComponent implements OnInit {
   }
 
   orderPrice() {
+    this.currentPage = 0;
     this.sortCijena = true;
     this.sortAsc = !this.sortAsc;
   }

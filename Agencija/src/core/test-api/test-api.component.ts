@@ -68,19 +68,5 @@ export class TestApiComponent implements OnInit {
       console.log(this.results);
     }, error => { this.results = error.message; });
   }
-/*
-  addTopOffer() {
-    this.coreService.getOffersByPage(3).subscribe( data => {
-      const o = data[0];
-      this.coreService.addOfferToTopList(o.id).subscribe( data2 => {}, error => { this.results = error.message; });
-    }, error => { this.results = error.message; });
-  }
 
-  removeTopOffer() {
-    this.coreService.getOffersByPage(0).subscribe( data => {
-      const o = data[2];
-      this.coreService.removeOfferFromTopList(o.id).subscribe( data2 => {}, error => { this.results = error.message; });
-    }, error => { this.results = error.message; });
-  }
- */
 }
