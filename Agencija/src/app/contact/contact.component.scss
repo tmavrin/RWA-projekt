@@ -2,3 +2,51 @@
   height: 100vh;
   background: url('../../assets/images/water_photo.jpg');
 }
+
+h3 {
+  font-family: 'Oswald Light', sans-serif;
+}
+
+.container {
+  height: 620px;
+  width: 350px;
+  padding: 10px 30px;
+  margin: 25px 50px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #087B82;
+  text-align: left;
+
+  &.info {
+    h3 {
+      margin: 10px 0;
+    }
+    p {
+      line-height: 24px;
+      margin: 0 0 30px;
+    }
+  }
+
+  &:not(.info) {
+    h3 {
+      text-align: center;
+    }
+
+    p {
+      margin: 10% 0 10px;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: rgba(0, 189, 189, 0.25);
+      color: black;
+    }
+
+    button {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      border-color: #087B82;
+      color: #087B82;
+    }
+  }
+}
