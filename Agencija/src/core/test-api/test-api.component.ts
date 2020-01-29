@@ -18,16 +18,17 @@ export class TestApiComponent implements OnInit {
     this.results = 'start';
   }
 
-  getUsers() {
-    this.coreService.getUser('marina', 'boop').subscribe(data => {
+  login() {
+    const u = new User('patkica', 'mala');
+    this.coreService.login(u).subscribe(data => {
       this.results = data;
       console.log(this.results);
     }, error => { this.results = error.message; });
   }
 
-  addUser() {
-    const u = new User('marina', 'boop');
-    this.coreService.addUser(u).subscribe(data => {
+  register() {
+    const u = new User('patkica', 'mala');
+    this.coreService.register(u).subscribe(data => {
       this.results = data;
       console.log(this.results);
     }, error => { this.results = error.message; });

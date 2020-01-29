@@ -2,12 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-<<<<<<< HEAD
-import { HttpClientModule } from '@angular/common/http';
-=======
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
->>>>>>> cfb37aceb3be4c3de5f729fd4146d090c3bb7b24
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';

@@ -4,8 +4,8 @@ export class User {
   jwtToken: string;
   role: string;
 
-  constructor(username, jwtToken) {
+  constructor(username, password) {
     this.username = username;
-    this.jwtToken = jwtToken;
+    this.password = password;
   }
 }

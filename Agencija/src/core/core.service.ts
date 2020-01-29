@@ -12,19 +12,16 @@ export class CoreService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(username: string, password: string) {
+  login(user: User) {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
-    return this.http.post(this.backendUrl + '/auth', {username, password}, { headers });
+    return this.http.post(this.backendUrl + '/auth', user, { headers });
   }
 
-  addUser(user) {
-    /*const httpParams = new HttpParams()
-      .append('username', user.username)
-      .append('password', user.password);*/
+  register(user: User) {
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
-    return this.http.post(this.backendUrl + '/register', {username: user.username, password: user.password}, { headers });
+    return this.http.post(this.backendUrl + '/register', user, { headers });
   }
 
   getOffersByPage(pageNo: number, itemNo = 3) {
