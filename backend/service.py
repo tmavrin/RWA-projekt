@@ -148,7 +148,7 @@ def create_app(test_config=None):
         return send_query(query)
 
     @app.route('/offers', methods=['POST'])
-    @jwt_required()
+    #@jwt_required()
     def create_offer():
         data = request.get_json()
         if(check_request_body(data, 'title', 'description', 'price')):
@@ -161,7 +161,7 @@ def create_app(test_config=None):
             abort(400, "missing properties from body, REQUIRED: title, description, price")
 
     @app.route('/offers', methods=['PUT'])
-    @jwt_required()
+    #@jwt_required()
     def update_offerr():
         data = request.get_json()
         # mozda postoji bolji nacin za ovo?
@@ -179,7 +179,7 @@ def create_app(test_config=None):
             abort(400, "missing properties from body, REQUIRED: title, description, price, id")
 
     @app.route('/offers', methods=['DELETE'])
-    @jwt_required()
+    #@jwt_required()
     def delete_offer():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -194,7 +194,7 @@ def create_app(test_config=None):
         return send_query(query)
 
     @app.route('/top-offers', methods=['POST'])
-    @jwt_required()
+    #@jwt_required()
     def set_top_offers():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -204,7 +204,7 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/top-offers', methods=['DELETE'])
-    @jwt_required()
+    #@jwt_required()
     def remove_top_offers():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -219,7 +219,7 @@ def create_app(test_config=None):
     ################################
 
     @app.route('/pdf', methods=['POST'])
-    @jwt_required()
+    #@jwt_required()
     def upload_pdf():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -249,7 +249,7 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/image', methods=['POST'])
-    @jwt_required()
+    #@jwt_required()
     def upload_image():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -287,75 +287,79 @@ def create_app(test_config=None):
 
     @app.route('/users', methods=['GET'])
     def get_users():
-        if 'username' in request.args:
-            username = request.args['username']
-            query = "SELECT * FROM LoginInfo WHERE username='{}'".format(username)
-        else:
-            query = 'SELECT * FROM LoginInfo'
-        return send_query(query)
+        abort(410, "Endpoint moved to /auth, use: {'username': 'user', 'password' : 'pass'}. For authorization purposes, it returns JWT token for further authorization. /protected endpoint tests JWT token")
+        
+        #if 'username' in request.args:
+        #    username = request.args['username']
+        #    query = "SELECT * FROM LoginInfo WHERE username='{}'".format(username)
+        #else:
+        #    query = 'SELECT * FROM LoginInfo'
+        #return send_query(query)
 
     @app.route('/users', methods=['POST'])
     def create_user():
-        username = request.form.get('username')
-        password = request.form.get('password')
-        query = "INSERT INTO LoginInfo(Username, Password) VALUES('{}','{}' )".format(username,password)
-        return send_query(query)
+        abort(410, "Endpoint moved to /register, use: {'username': 'user', 'password': 'pass'}")
+        #username = request.form.get('username')
+        #password = request.form.get('password')
+        #query = "INSERT INTO LoginInfo(Username, Password) VALUES('{}','{}' )".format(username,password)
+        #return send_query(query)
 
     @app.route('/users', methods=['PUT'])
     def update_user_set_new_password():
-        username = request.form.get('username')
-        new_password = request.form.get('password')
-        query = "UPDATE LoginInfo SET Password='{}' WHERE username='{}')".format(new_password,username)
-        return send_query(query)
+        abort(410, "Endpoint moved to /register, use: {'username': user, 'password': pass}")
+        #username = request.form.get('username')
+        #new_password = request.form.get('password')
+        #query = "UPDATE LoginInfo SET Password='{}' WHERE username='{}')".format(new_password,username)
+        #return send_query(query)
 
     @app.route('/users/<string:username>', methods=['DELETE'])
     def delete_user(username):
-        query = "DELETE FROM LoginInfo WHERE username='{}')".format(username)
-        return send_query(query)
+        abort(410, "Endpoint moved to /register, use: {'username': user, 'password': pass}")
+        #query = "DELETE FROM LoginInfo WHERE username='{}')".format(username)
+        #return send_query(query)
 
 
     ################################
 
     @app.route('/show-user-reviews', methods=['POST'])
     def show_user_reviews():
-        '''
-        '''
-        username = request.form.get('username')
-        query = "SELECT * FROM Reviews WHERE username='{}')".format(username)
-        return send_query(query)
+        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
+
+        #username = request.form.get('username')
+        #query = "SELECT * FROM Reviews WHERE username='{}')".format(username)
+        #return send_query(query)
 
     @app.route('/create-review', methods=['POST'])
     def create_review():
-        '''
-        '''
-        tourid = request.form.get('tourid')
-        username = request.form.get('username')
-        review_text = request.form.get('review_text')
-        query = "INSERT INTO Reviews(TourID, Username, ReviewText) VALUES({}, '{}', '{}')".format(tourid,username,review_text)
-        return send_query(query)
+        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
+        
+        #tourid = request.form.get('tourid')
+        #username = request.form.get('username')
+        #review_text = request.form.get('review_text')
+        #query = "INSERT INTO Reviews(TourID, Username, ReviewText) VALUES({}, '{}', '{}')".format(tourid,username,review_text)
+        #return send_query(query)
 
     @app.route('/check-login', methods=['POST'])
     def check_login():
-        '''
-        Returns json in the form:
-        { 'count': integer } 
-        for each matching user, pass pair
-        '''
-        username = request.form.get('username')
-        password = request.form.get('password')
-        query = "SELECT count(*) FROM LoginInfo WHERE username='{}' and password='{}'')".format(username,password)
-        print(query)
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        mysql.connection.commit()
-        data = cur.fetchone()
-        print('Returning the following data: ' + str(data[0]))
-        return jsonify(count=data[0])
+        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
+        
+        #username = request.form.get('username')
+        #password = request.form.get('password')
+        #query = "SELECT count(*) FROM LoginInfo WHERE username='{}' and password='{}'')".format(username,password)
+        #print(query)
+        #cur = mysql.connection.cursor()
+        #cur.execute(query)
+        #mysql.connection.commit()
+        #data = cur.fetchone()
+        #print('Returning the following data: ' + str(data[0]))
+        #return jsonify(count=data[0])
 
     @app.route('/show-reviews', methods=['GET'])
     def describe_review():
-        query = 'SELECT * FROM  Reviews'
-        return send_query(query)
+        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
+        
+        #query = 'SELECT * FROM  Reviews'
+        #return send_query(query)
 
     @app.route('/', methods=['GET'])
     def greet():

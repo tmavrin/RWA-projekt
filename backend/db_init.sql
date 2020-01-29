@@ -25,15 +25,6 @@ CREATE TABLE IF NOT EXISTS offer(
 
 GRANT ALL PRIVILEGES ON offer TO 'duser'@'localhost';
 
-
-CREATE TABLE LoginInfo
-(
-	Username CHAR(40) NOT NULL,
-	Password CHAR(40) NOT NULL,
-
-	PRIMARY KEY (Username)
-);
-
 GRANT ALL PRIVILEGES ON LoginInfo TO 'duser'@'localhost';
 
 CREATE TABLE Reviews
