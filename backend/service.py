@@ -51,6 +51,12 @@ def create_app(test_config=None):
     mysql = MySQL(app)
     bcrypt = Bcrypt(app)
 
+
+
+    ################################
+    ##       GLOBAL METHODS       ##
+    ################################
+
     def send_query(query):
         try:
             cur = mysql.connection.cursor()
@@ -70,7 +76,6 @@ def create_app(test_config=None):
                 return "success"
         except:
             abort(409,"DB integrity error, probably duplicate")
-        
 
     def send_query_(query):
         cur = mysql.connection.cursor()
@@ -87,7 +92,6 @@ def create_app(test_config=None):
             return json_data
         else:
             return "success"
-        
 
     def check_request_body(json_data, *args):
         try:
@@ -106,8 +110,24 @@ def create_app(test_config=None):
         except:
             return False
 
+    @app.route('/', methods=['GET'])
+    def greet():
+        response = "<h2>Last restart: " + str(last_restart) + "</h2><br> <h2>Working Endpoints</h2>"\
+            + "<h3>/offers [GET,POST,PUT,DELETE]</h3><br>"\
+            + "<h3>/top-offer [GET,POST,DELETE]</h3><br>"\
+            + "<h3>/image [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>image</b> on upload.</p> <br>"\
+            + "<h3>/pdf [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>pdf</b> on upload.</p> <br>"\
+            + "<h2>JWT AUTHORIZATION</h2><br>"\
+            + "<h3>/auth [POST]</h2><br>"\
+            + "<h3>@jwt_required METHODS (registered user/admin only)</h2> <p>Every protected request needs to have Authorization: JWT -jwt_token- header.</p><br>"\
+            + "<p>Token can be retrieved from 'hostaddress/auth' with body params 'username' and 'password'. </p><br>"\
+            + "<p>All passswords are stored as <b>hash</b> in database. </p><br>"
+        return response
+
+
+
     ################################
-    ##        OFFER METHODS       ##
+    ##         USER METHODS       ##
     ################################
 
     def authenticate(username, password):
@@ -137,6 +157,11 @@ def create_app(test_config=None):
         else:
             abort(400, "missing properties from body, REQUIRED: username, password")
 
+
+
+    ################################
+    ##        OFFER METHODS       ##
+    ################################
 
     @app.route('/offers', methods=['GET'])
     def get_offers():
@@ -214,8 +239,9 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
 
+
     ################################
-    ##     File Upload METHODS    ##
+    ##     FILE UPLOAD METHODS    ##
     ################################
 
     @app.route('/pdf', methods=['POST'])
@@ -278,102 +304,6 @@ def create_app(test_config=None):
         else:
             abort(400, "Missing id param, REQUIRED: id")
 
-
-
-
-    ################################
-    ##      LoginInfo METHODS     ##
-    ################################
-
-    @app.route('/users', methods=['GET'])
-    def get_users():
-        abort(410, "Endpoint moved to /auth, use: {'username': 'user', 'password' : 'pass'}. For authorization purposes, it returns JWT token for further authorization. /protected endpoint tests JWT token")
-        
-        #if 'username' in request.args:
-        #    username = request.args['username']
-        #    query = "SELECT * FROM LoginInfo WHERE username='{}'".format(username)
-        #else:
-        #    query = 'SELECT * FROM LoginInfo'
-        #return send_query(query)
-
-    @app.route('/users', methods=['POST'])
-    def create_user():
-        abort(410, "Endpoint moved to /register, use: {'username': 'user', 'password': 'pass'}")
-        #username = request.form.get('username')
-        #password = request.form.get('password')
-        #query = "INSERT INTO LoginInfo(Username, Password) VALUES('{}','{}' )".format(username,password)
-        #return send_query(query)
-
-    @app.route('/users', methods=['PUT'])
-    def update_user_set_new_password():
-        abort(410, "Endpoint moved to /register, use: {'username': user, 'password': pass}")
-        #username = request.form.get('username')
-        #new_password = request.form.get('password')
-        #query = "UPDATE LoginInfo SET Password='{}' WHERE username='{}')".format(new_password,username)
-        #return send_query(query)
-
-    @app.route('/users/<string:username>', methods=['DELETE'])
-    def delete_user(username):
-        abort(410, "Endpoint moved to /register, use: {'username': user, 'password': pass}")
-        #query = "DELETE FROM LoginInfo WHERE username='{}')".format(username)
-        #return send_query(query)
-
-
-    ################################
-
-    @app.route('/show-user-reviews', methods=['POST'])
-    def show_user_reviews():
-        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
-
-        #username = request.form.get('username')
-        #query = "SELECT * FROM Reviews WHERE username='{}')".format(username)
-        #return send_query(query)
-
-    @app.route('/create-review', methods=['POST'])
-    def create_review():
-        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
-        
-        #tourid = request.form.get('tourid')
-        #username = request.form.get('username')
-        #review_text = request.form.get('review_text')
-        #query = "INSERT INTO Reviews(TourID, Username, ReviewText) VALUES({}, '{}', '{}')".format(tourid,username,review_text)
-        #return send_query(query)
-
-    @app.route('/check-login', methods=['POST'])
-    def check_login():
-        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
-        
-        #username = request.form.get('username')
-        #password = request.form.get('password')
-        #query = "SELECT count(*) FROM LoginInfo WHERE username='{}' and password='{}'')".format(username,password)
-        #print(query)
-        #cur = mysql.connection.cursor()
-        #cur.execute(query)
-        #mysql.connection.commit()
-        #data = cur.fetchone()
-        #print('Returning the following data: ' + str(data[0]))
-        #return jsonify(count=data[0])
-
-    @app.route('/show-reviews', methods=['GET'])
-    def describe_review():
-        abort(410, "Endpoint removed, endpoint doesn't exist anymore")
-        
-        #query = 'SELECT * FROM  Reviews'
-        #return send_query(query)
-
-    @app.route('/', methods=['GET'])
-    def greet():
-        response = "<h2>Last restart: " + str(last_restart) + "</h2><br> <h2>Working Endpoints</h2>"\
-            + "<h3>/offers [GET,POST,PUT,DELETE]</h3><br>"\
-            + "<h3>/top-offer [GET,POST,DELETE]</h3><br>"\
-            + "<h3>/image [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>image</b> on upload.</p> <br>"\
-            + "<h3>/pdf [POST,GET]</h3> <p>Requires <b>id</b> for get and post and file with property name <b>pdf</b> on upload.</p> <br>"\
-            + "<h2>JWT AUTHORIZATION</h2><br>"\
-            + "<h3>/auth [POST]</h2><br>"\
-            + "<h3>@jwt_required METHODS (registered user/admin only)</h2> <p>Every protected request needs to have Authorization: JWT -jwt_token- header.</p><br>"\
-            + "<p>Token can be retrieved from 'hostaddress/auth' with body params 'username' and 'password'. </p><br>"\
-            + "<p>All passswords are stored as <b>hash</b> in database. </p><br>"
-        return response
 
 
     if __name__ == '__main__':
