@@ -11,7 +11,11 @@
       <fa name="minus-square-o" size="2x" class="pointer" (click)="delete(i)"></fa>
     </div>
 
-    <app-edit-offer *ngIf="expand[i]" [offer]="o" (collapse)="expand[i] = false"></app-edit-offer>
+    <app-edit-offer *ngIf="expand[i]"
+                    [offer]="o"
+                    (collapse)="expand[i] = false"
+                    (done)="getOffers(currentPage);">
+    </app-edit-offer>
 
   </div>
 

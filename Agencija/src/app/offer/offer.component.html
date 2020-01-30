@@ -62,7 +62,8 @@
   <app-default-offer *ngFor="let o of offers" [offer]="o"></app-default-offer>
 </div>
 
-<app-pagination [max]="maxPage"
+<app-pagination *ngIf="showPagination"
+                [max]="maxPage"
                 [current]="currentPage"
                 (get)="getOffers($event)"
                 class="flex_center_center">

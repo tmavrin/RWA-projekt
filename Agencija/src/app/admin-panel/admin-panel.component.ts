@@ -32,17 +32,19 @@ export class AdminPanelComponent implements OnInit {
   constructor(protected coreService: CoreService) {}
 
   ngOnInit() {
-    this.coreService
-      .getNumberOfOffers()
-      .toPromise()
-      .then(
-        data => {
-          this.maxPage = Math.ceil(JSON.parse(JSON.stringify(data)).count / 5);
-        },
-        error => {
-          console.log(error.message);
-        }
-      );
+    this.getNumberOfOffers();
+  }
+
+  getNumberOfOffers() {
+    console.log('interested?');
+    this.coreService.getNumberOfOffers().subscribe(
+      data => {
+        this.maxPage = Math.ceil(JSON.parse(JSON.stringify(data)).count / 5);
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
 
     this.getOffers(0);
   }
@@ -76,6 +78,7 @@ export class AdminPanelComponent implements OnInit {
         for (let i = 0; i < this.offers.length; i++) {
           this.expand[i] = false;
         }
+        this.getNumberOfOffers();
       },
       error => {
         console.log(error.message);

@@ -35,7 +35,7 @@ export class TestApiComponent implements OnInit {
   }
 
   getOffers() {
-    this.coreService.getOffersByPage(2).subscribe( data => {
+    this.coreService.getOffersByPage(0, 15).subscribe( data => {
       this.results = data;
       console.log(this.results);
     }, error => { this.results = error.message; });

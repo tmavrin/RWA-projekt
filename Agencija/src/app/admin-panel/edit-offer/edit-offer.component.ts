@@ -30,6 +30,7 @@ export class EditOfferComponent implements OnInit {
 
   @Input() offer: Offer;
   @Output() collapse = new EventEmitter();
+  @Output() done = new EventEmitter();
   editForm: FormGroup;
   showErrorMessage = false;
   image = null;
@@ -98,6 +99,8 @@ export class EditOfferComponent implements OnInit {
         console.log('good image :)', data);
       }, error => { console.log('bad image :('); });
     }
+
+    this.done.emit();
   }
 
   editOffer() {
