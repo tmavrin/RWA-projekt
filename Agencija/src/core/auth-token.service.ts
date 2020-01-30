@@ -46,6 +46,7 @@ export class AuthTokenService implements HttpInterceptor {
         addr === 'top-offers' ||
         addr === 'image' ||
         addr === 'pdf' ||
+        addr === 'get-images' ||
         addr === 'offers-count') &&
       req.method === 'GET'
     ) {
