@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { User } from './VO/User';
 
 @Injectable({
   providedIn: 'root'
