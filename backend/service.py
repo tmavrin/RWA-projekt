@@ -267,11 +267,11 @@ def create_app(test_config=None):
     @app.route('/get-images', methods=['GET'])
     def get_all_images():
         path = os.getcwd() + "/uploads/images"
-        list_of_files = {}
+        list_of_files = []
 
         for filename in os.listdir(path):
             filename = filename.translate(None, '.png')
-            list_of_files[filename] = "/image?id=" + filename
+            list_of_files.append("/image?id=" + filename)
         return jsonify(list_of_files)
 
 
