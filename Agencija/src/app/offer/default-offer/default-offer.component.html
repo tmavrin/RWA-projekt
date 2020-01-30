@@ -1,13 +1,16 @@
 <div class="container yellow-shadow flex_space_between">
   <img *ngIf="!offer.image" src="../../../assets/images/example_img1.png" />
-  <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer?.image }}" />
+  <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer.image }}" />
 
   <div class="offer-text">
-    <h3>{{ offer?.title }}</h3>
-    <p>{{ offer?.description }}</p>
+    <h3>{{ offer.title }}</h3>
+    <p>{{ offer.description }}</p>
 
     <div class="offer-extra-info right">
-      <p>Price: {{ offer?.price }}</p>
+      <a *ngIf="offer.pdf" href="{{ 'http://178.238.232.172:8080/' + offer.pdf }}" target="_blank">
+        <b>Itinerary</b>
+      </a>
+      <p><b>Price:</b> {{ offer.price }} EUR</p>
     </div>
   </div>
 </div>

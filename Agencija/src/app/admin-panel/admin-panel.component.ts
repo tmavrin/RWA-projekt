@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CoreService } from '../../core/core.service';
+import { Offer } from '../../core/VO/Offer';
 
 @Component({
   selector: 'app-admin-panel',
@@ -16,10 +17,12 @@ import { CoreService } from '../../core/core.service';
 })
 export class AdminPanelComponent implements OnInit {
 
+  newOffer = new Offer('', '', '');
   offers: any;
   maxPage = 0;
   currentPage = 0;
   expand = [];
+  add = false;
 
   constructor(protected coreService: CoreService) {}
 

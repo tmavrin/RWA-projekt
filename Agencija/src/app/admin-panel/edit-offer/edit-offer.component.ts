@@ -27,13 +27,14 @@ function requiredFileType(type: string) {
   styleUrls: ['./edit-offer.component.scss']
 })
 export class EditOfferComponent implements OnInit {
-  // tslint:disable-next-line:no-input-rename
-  @Input('offer') offer: Offer;
+
+  @Input() offer: Offer;
   @Output() collapse = new EventEmitter();
   editForm: FormGroup;
   showErrorMessage = false;
   image = null;
   pdf = null;
+  method = 'edit';
 
   constructor(protected formBuilder: FormBuilder,
               protected coreService: CoreService,
@@ -49,10 +50,14 @@ export class EditOfferComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.editForm.get('title').setValue(this.offer.title);
-    this.editForm.get('description').setValue(this.offer.description);
-    this.editForm.get('isTop').setValue(this.offer.isTop);
-    this.editForm.get('price').setValue(this.offer.price);
+    if (this.offer.title !== '') {
+      this.editForm.get('title').setValue(this.offer.title);
+      this.editForm.get('description').setValue(this.offer.description);
+      this.editForm.get('isTop').setValue(this.offer.isTop);
+      this.editForm.get('price').setValue(this.offer.price);
+    } else {
+      this.method = 'add';
+    }
   }
 
   onFileChange(event, type) {
@@ -75,17 +80,35 @@ export class EditOfferComponent implements OnInit {
     this.offer.description = this.editForm.get('description').value;
     this.offer.price = this.editForm.get('price').value;
     this.offer.isTop = this.editForm.get('isTop').value;
-    this.offer.image = this.editForm.get('isTop').value;
 
-  /*  this.coreService.editOffer(this.offer).subscribe(data => {
-      console.log(data);
-    }, error => { console.log(error.message); });
-*/
+    if (this.method === 'edit') {
+      this.editOffer();
+    } else {
+      this.addOffer();
+    }
 
     if (this.pdf !== null) {
       this.coreService.uploadPdf(this.offer.id, this.pdf).subscribe(data => {
-        console.log(data);
-      }, error => { console.log(error.message); });
+        console.log('good pdf :)', data);
+      }, error => { console.log('bad pdf :('); });
     }
+
+    if (this.image !== null) {
+      this.coreService.uploadImage(this.offer.id, this.image).subscribe(data => {
+        console.log('good image :)', data);
+      }, error => { console.log('bad image :('); });
+    }
+  }
+
+  editOffer() {
+    this.coreService.editOffer(this.offer).subscribe(data => {
+      console.log('good offer :)', data);
+    }, error => { console.log('bad offer :('); });
+  }
+
+  addOffer() {
+    this.coreService.addOffer(this.offer).subscribe(data => {
+      console.log('good offer :)', data);
+    }, error => { console.log('bad offer :('); });
   }
 }

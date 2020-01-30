@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'offer', component: OfferComponent },
   { path: 'login', component: LoginComponent},
-  { path: 'admin', component: AdminPanelComponent/*, canActivate: [ AuthGuard ]*/},
+  { path: 'admin', component: AdminPanelComponent, canActivate: [ AuthGuard ]},
   { path: 'test-api', component: TestApiComponent}
 ];
 

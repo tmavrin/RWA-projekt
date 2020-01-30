@@ -23,7 +23,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['/admin']);
+    }
+  }
 
   submit() {
     if (this.loginForm.invalid) {

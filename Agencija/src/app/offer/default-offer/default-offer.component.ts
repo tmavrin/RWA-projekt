@@ -7,8 +7,8 @@ import { Offer } from '../../../core/VO/Offer';
   styleUrls: ['./default-offer.component.scss']
 })
 export class DefaultOfferComponent implements OnInit {
-  // tslint:disable-next-line:no-input-rename
-  @Input('offer') offer: Offer;
+
+  @Input() offer: Offer;
 
   constructor() {}
 

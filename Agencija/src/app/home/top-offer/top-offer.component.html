@@ -1,10 +1,13 @@
 <div class="container red-shadow flex_space_between">
   <img *ngIf="!offer.image" src="../../../assets/images/example_img1.png" />
-  <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer?.image }}" />
+  <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer.image }}" />
 
   <div class="offer-text">
     <h3>{{ offer?.title }}</h3>
     <p>{{ offer?.description }}</p>
-    <button routerLink="offer">Read More</button>
+    <button *ngIf="!offer.pdf" routerLink="offer">Read More</button>
+    <button *ngIf="offer.pdf">
+      <a href="{{ 'http://178.238.232.172:8080/' + offer.pdf }}" target="_blank">Read More</a>
+    </button>
   </div>
 </div>

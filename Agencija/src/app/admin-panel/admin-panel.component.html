@@ -15,7 +15,11 @@
 
   </div>
 
-  <button>Add new offer</button>
+  <button *ngIf="!add" (click)="add=true">Add new offer</button>
+
+  <div *ngIf="add" class="container yellow-shadow">
+    <app-edit-offer [offer]="newOffer" (collapse)="add=false"></app-edit-offer>
+  </div>
 </div>
 
 <app-pagination [max]="maxPage"

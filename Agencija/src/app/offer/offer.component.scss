@@ -48,8 +48,8 @@
   max-width: 800px;
 }
 
-.cijena.selected {
-  background: #0000003a;
+.cijena.selected, .cijena:hover {
+  background: #FFE666;
 }
 
 .cijena {

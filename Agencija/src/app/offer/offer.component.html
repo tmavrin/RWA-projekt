@@ -30,14 +30,14 @@
   --></div>
 
   <div class="sort-box flex_space_between">
-    <p><b>Sortiraj po:</b></p>
+    <p><b>Sort by:</b></p>
 
     <div
       class="flex_center_center cijena"
       [ngClass]="{ selected: sortCijena }"
       (click)="orderPrice(); search()"
     >
-      <span>CIJENI</span>
+      <span class="uppercase">Price</span>
       <fa
         [ngClass]="{ rotated: !sortAsc }"
         name="angle-double-up"

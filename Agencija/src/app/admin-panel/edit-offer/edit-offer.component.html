@@ -9,8 +9,8 @@
   <div class="edit-text">
 
     <div class="star-rating">
-      <input type="checkbox" formControlName="isTop" id="{{ offer.id }}" />
-      <label for="{{ offer.id }}" class="pointer"></label>
+      <input type="checkbox" formControlName="isTop" id="{{ offer.id ? offer.id : 'x' }}" />
+      <label for="{{ offer.id ? offer.id : 'x' }}" class="pointer"></label>
     </div>
 
     <input type="text" formControlName="title" class="uppercase">
