@@ -14,6 +14,7 @@ export class OfferComponent implements OnInit {
   sortCijena = false;
   sortAsc = true;
   searchQ: string;
+  showPagination = true;
 
   constructor(protected coreService: CoreService) {}
 
@@ -42,18 +43,20 @@ export class OfferComponent implements OnInit {
     if (event) {
       this.searchQ = event.target.value;
     }
+    this.showPagination = (this.searchQ === '');
     this.currentPage = 0;
+
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(() => {
       if (this.sortCijena) {
         this.coreService
-          .getOffersByPage(0, 3, this.searchQ, this.sortAsc)
+          .getOffersByPage(0, this.showPagination ? 3 : 15, this.searchQ, this.sortAsc)
           .subscribe(data => {
             this.offers = data;
           });
       } else {
         this.coreService
-          .getOffersByPage(0, 3, this.searchQ)
+          .getOffersByPage(0, this.showPagination ? 3 : 15, this.searchQ)
           .subscribe(data => {
             this.offers = data;
           });
