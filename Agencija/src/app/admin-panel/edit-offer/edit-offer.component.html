@@ -22,12 +22,12 @@
     <div>
       <label>Plan i program</label>
       <input type="file" name="pdf" id="pdf" (change)="onFileChange($event, 'pdf')"/>
-      <label for="pdf" class="pointer uppercase">Edit pdf</label>
+      <label for="pdf" class="pointer uppercase">{{ pdf ? 'Edit pdf' : 'Add pdf' }}</label>
       <span *ngIf="pdf">{{pdf.name}}</span>
     </div>
 
     <div>
-    <label>Price</label> <input type="text" formControlName="price">
+    <label>Price</label> <input type="text" formControlName="price"> EUR
     </div>
 
     <button (click)="collapse.emit()" style="right: 140px">Cancel</button>

@@ -56,6 +56,7 @@ export class EditOfferComponent implements OnInit {
       this.editForm.get('description').setValue(this.offer.description);
       this.editForm.get('isTop').setValue(this.offer.isTop);
       this.editForm.get('price').setValue(this.offer.price);
+      this.pdf = this.offer.pdf;
     } else {
       this.method = 'add';
     }

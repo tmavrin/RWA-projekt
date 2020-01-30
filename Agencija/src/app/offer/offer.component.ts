@@ -43,7 +43,7 @@ export class OfferComponent implements OnInit {
     if (event) {
       this.searchQ = event.target.value;
     }
-    this.showPagination = (this.searchQ === '');
+    this.showPagination = (this.searchQ === '' || this.searchQ === undefined);
     this.currentPage = 0;
 
     clearTimeout(this.searchTimeout);
