@@ -8,11 +8,15 @@ input, textarea {
 }
 
 .edit-image {
-  margin: 0 10px;
+  margin: 7px 10px 0;
   width: 25%;
 
   img, input {
     width: 100%;
+  }
+  p {
+    margin-top: 20px;
+    text-indent: 10px;
   }
 }
 

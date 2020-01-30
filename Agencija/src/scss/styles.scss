@@ -177,3 +177,26 @@ textarea {
   padding: 10px 12px;
   line-height: 24px;
 }
+
+input[type='file'] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+  & + label {
+    background: #FDF19B;
+    display: inline !important;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    margin: 0 15px 15px 0;
+  }
+
+  &:focus + label, & + label:hover {
+    background-color: #FFE666;
+  }
+}
