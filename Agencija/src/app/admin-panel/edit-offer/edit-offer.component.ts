@@ -1,6 +1,18 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import { Offer } from '../../../core/VO/Offer';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { CoreService } from '../../../core/core.service';
 /*
 function requiredFileType(type: string) {
@@ -27,7 +39,6 @@ function requiredFileType(type: string) {
   styleUrls: ['./edit-offer.component.scss']
 })
 export class EditOfferComponent implements OnInit {
-
   @Input() offer: Offer;
   @Output() collapse = new EventEmitter();
   @Output() done = new EventEmitter();
@@ -37,16 +48,18 @@ export class EditOfferComponent implements OnInit {
   pdf = null;
   method = 'edit';
 
-  constructor(protected formBuilder: FormBuilder,
-              protected coreService: CoreService,
-              protected cd: ChangeDetectorRef) {
+  constructor(
+    protected formBuilder: FormBuilder,
+    protected coreService: CoreService,
+    protected cd: ChangeDetectorRef
+  ) {
     this.editForm = this.formBuilder.group({
-     // image: ['', [requiredFileType('png')]],
+      // image: ['', [requiredFileType('png')]],
       title: ['', [Validators.required]],
       description: ['', Validators.required],
       isTop: '',
       price: ['', Validators.required] // ,
-    //  pdf: ['', [requiredFileType('pdf')]]
+      //  pdf: ['', [requiredFileType('pdf')]]
     });
   }
 
@@ -65,10 +78,8 @@ export class EditOfferComponent implements OnInit {
   onFileChange(event, type) {
     if (type === 'pdf') {
       this.pdf = event.target.files[0];
-      // console.log(this.pdf);
     } else if (type === 'png') {
       this.image = event.target.files[0];
-      // console.log(this.image);
     }
   }
 
@@ -89,30 +100,52 @@ export class EditOfferComponent implements OnInit {
       this.addOffer();
     }
 
-    if (this.pdf !== null) {
-      this.coreService.uploadPdf(this.offer.id, this.pdf).subscribe(data => {
-        console.log('good pdf :)', data);
-      }, error => { console.log('bad pdf :('); });
+    if (this.pdf !== null && typeof this.pdf !== 'string') {
+      this.coreService.uploadPdf(this.offer.id, this.pdf).subscribe(
+        data => {
+          //console.log('good pdf :)', data);
+        },
+        error => {
+          //console.error('bad pdf :(');
+        }
+      );
     }
 
     if (this.image !== null) {
-      this.coreService.uploadImage(this.offer.id, this.image).subscribe(data => {
-        console.log('good image :)', data);
-      }, error => { console.log('bad image :('); });
+      this.coreService.uploadImage(this.offer.id, this.image).subscribe(
+        data => {
+          //console.log('good image :)', data);
+        },
+        error => {
+          //console.error('bad image :(');
+        }
+      );
     }
 
     this.done.emit();
   }
 
   editOffer() {
-    this.coreService.editOffer(this.offer).subscribe(data => {
-      console.log('good offer :)', data);
-    }, error => { console.log('bad offer :('); });
+    this.coreService.editOffer(this.offer).subscribe(
+      data => {
+        console.log('good offer :)', data);
+      },
+      error => {
+        console.log('bad offer :(');
+      }
+    );
   }
 
   addOffer() {
-    this.coreService.addOffer(this.offer).subscribe(data => {
-      console.log('good offer :)', data);
-    }, error => { console.log('bad offer :('); });
+    this.coreService.addOffer(this.offer).subscribe(
+      data => {
+        console.log('good offer :)', data);
+        this.collapse.emit();
+      },
+      error => {
+        console.log('bad offer :(');
+        this.collapse.emit();
+      }
+    );
   }
 }

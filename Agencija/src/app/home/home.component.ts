@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CoreService } from '../../core/core.service';
 
 @Component({
@@ -22,8 +22,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getTopOffers() {
     this.coreService.getTopList().subscribe(
-      data => { this.topOffers = data; },
-      error => { console.log(error.message); }
+      data => {
+        this.topOffers = data;
+      },
+      error => {
+        console.error(error.message);
+      }
     );
   }
 
@@ -31,8 +35,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     const scrollPercent = document.scrollingElement.scrollTop / 410;
 
     const h1 = document.getElementById('scroll-me');
-    const translateValue = -1 * Math.max(Math.round((1 - scrollPercent) * 110), 0);
-    const color = Math.min(Math.max(Math.round((1 - scrollPercent) * 100), 63), 100);
+    const translateValue =
+      -1 * Math.max(Math.round((1 - scrollPercent) * 110), 0);
+    const color = Math.min(
+      Math.max(Math.round((1 - scrollPercent) * 100), 63),
+      100
+    );
     h1.style.color = 'hsl(358, 100%,' + color + '%)';
     h1.style.transform = 'translateY(' + String(translateValue) + 'px)';
 

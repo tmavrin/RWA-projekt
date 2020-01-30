@@ -36,7 +36,6 @@ export class AuthTokenService implements HttpInterceptor {
         });
       }
     }
-
     return next.handle(request);
   }
 

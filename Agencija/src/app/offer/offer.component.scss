@@ -45,11 +45,12 @@
 
 .result-box {
   margin: 60px auto 20px;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
-.cijena.selected, .cijena:hover {
-  background: #FFE666;
+.cijena.selected,
+.cijena:hover {
+  background: #ffe666;
 }
 
 .cijena {

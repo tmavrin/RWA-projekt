@@ -36,16 +36,14 @@ export class AdminPanelComponent implements OnInit {
   }
 
   getNumberOfOffers() {
-    console.log('interested?');
     this.coreService.getNumberOfOffers().subscribe(
       data => {
         this.maxPage = Math.ceil(JSON.parse(JSON.stringify(data)).count / 5);
       },
       error => {
-        console.log(error.message);
+        console.error(error.message);
       }
     );
-
     this.getOffers(0);
   }
 
@@ -59,7 +57,7 @@ export class AdminPanelComponent implements OnInit {
         }
       },
       error => {
-        console.log(error.message);
+        console.error(error.message);
       }
     );
   }
@@ -81,7 +79,8 @@ export class AdminPanelComponent implements OnInit {
         this.getNumberOfOffers();
       },
       error => {
-        console.log(error.message);
+        console.error(error.message);
+        this.getNumberOfOffers();
       }
     );
   }

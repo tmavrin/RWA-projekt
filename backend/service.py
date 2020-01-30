@@ -223,7 +223,7 @@ def create_app(test_config=None):
             isTop = data['isTop']
             id_ = data['id']
             price = data['price']
-            query = "UPDATE offer SET title='{}', description='{}', price='{}', isTop='{}' WHERE id ='{}'".format(title, desc, price, isTop, id_)
+            query = "UPDATE offer SET title='{}', description='{}', price='{}', isTop={} WHERE id ='{}'".format(title, desc, price, isTop, id_)
             return send_query(query)
         else:
             abort(400, "missing properties from body, REQUIRED: title, description, price, id")

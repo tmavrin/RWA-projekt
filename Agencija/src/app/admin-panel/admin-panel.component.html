@@ -1,33 +1,45 @@
 <app-navbar-admin></app-navbar-admin>
 
 <div class="result-box">
-  <div *ngFor="let o of offers; let i = index"
-       class="container yellow-shadow"
-       [@expand]="expand[i] ? 'expanded' : 'collapsed'">
-
+  <div
+    *ngFor="let o of offers; let i = index"
+    class="container yellow-shadow"
+    [@expand]="expand[i] ? 'expanded' : 'collapsed'"
+  >
     <div *ngIf="!expand[i]" class="flex_center">
       <h3 class="uppercase">{{ o.title }}</h3>
       <fa name="edit" size="2x" class="pointer" (click)="expandForm(i)"></fa>
-      <fa name="minus-square-o" size="2x" class="pointer" (click)="delete(i)"></fa>
+      <fa
+        name="minus-square-o"
+        size="2x"
+        class="pointer"
+        (click)="delete(i)"
+      ></fa>
     </div>
 
-    <app-edit-offer *ngIf="expand[i]"
-                    [offer]="o"
-                    (collapse)="expand[i] = false"
-                    (done)="getOffers(currentPage);">
+    <app-edit-offer
+      *ngIf="expand[i]"
+      [offer]="o"
+      (collapse)="expand[i] = false; getNumberOfOffers()"
+      (done)="getOffers(currentPage)"
+    >
     </app-edit-offer>
-
   </div>
 
-  <button *ngIf="!add" (click)="add=true">Add new offer</button>
+  <button *ngIf="!add" (click)="add = true">Add new offer</button>
 
   <div *ngIf="add" class="container yellow-shadow">
-    <app-edit-offer [offer]="newOffer" (collapse)="add=false"></app-edit-offer>
+    <app-edit-offer
+      [offer]="newOffer"
+      (collapse)="add = false"
+    ></app-edit-offer>
   </div>
 </div>
 
-<app-pagination [max]="maxPage"
-                [current]="currentPage"
-                (get)="getOffers($event)"
-                class="flex_center_center">
+<app-pagination
+  [max]="maxPage"
+  [current]="currentPage"
+  (get)="getOffers($event)"
+  class="flex_center_center"
+>
 </app-pagination>

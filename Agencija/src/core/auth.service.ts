@@ -28,13 +28,11 @@ export class AuthService {
       .toPromise()
       .then(response => {
         const jwtToken = 'JWT ' + response.access_token;
-        console.log(jwtToken);
         localStorage.setItem(
           'currentUser',
           JSON.stringify(new User(username, jwtToken))
         );
         this.currentUserSubject.next(new User(username, jwtToken));
-        console.log(this.currentUserSubject.value);
       });
   }
 
