@@ -23,6 +23,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 
 import { CoreService } from '../core/core.service';
 import { AuthTokenService } from '../core/auth-token.service';
+import { GalleryComponent } from './gallery/gallery.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AuthTokenService } from '../core/auth-token.service';
     LoginComponent,
     AdminPanelComponent,
     EditOfferComponent,
-    PaginationComponent
+    PaginationComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,

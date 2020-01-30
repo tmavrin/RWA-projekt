@@ -10,12 +10,15 @@
     />
     <ul class="flex_center_center">
       <!-- <li routerLink="gallery" class="pointer">Gallery</li> -->
+      <li [routerLink]="['/offer']" class="pointer" routerLinkActive="selected">
+        Offer
+      </li>
       <li
-        [routerLink]="['/offer']"
+        [routerLink]="['/gallery']"
         class="pointer"
         routerLinkActive="selected"
       >
-        Offer
+        Gallery
       </li>
       <li
         [routerLink]="['/contact']"

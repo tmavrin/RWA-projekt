@@ -78,4 +78,8 @@ export class CoreService {
     const params = new HttpParams().append('id', id);
     return this.http.post(this.backendUrl + '/image', formData, { params });
   }
+
+  getGallery() {
+    return this.http.get(this.backendUrl + '/get-images');
+  }
 }

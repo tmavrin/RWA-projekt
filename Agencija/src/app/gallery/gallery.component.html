@@ -1,0 +1,11 @@
+<app-navbar-user></app-navbar-user>
+
+<div class="gallery flex_center_center background-image">
+  <div class="img-list">
+    <img
+      *ngFor="let image of imageList"
+      class="img-item"
+      src="{{ this.backendUrl + image }}"
+    />
+  </div>
+</div>

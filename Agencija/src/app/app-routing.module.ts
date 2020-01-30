@@ -8,19 +8,21 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { TestApiComponent } from '../core/test-api/test-api.component';
 
 import { AuthGuard } from '../core/auth.guard';
-
+import { GalleryComponent } from './gallery/gallery.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'offer', component: OfferComponent },
-  { path: 'login', component: LoginComponent},
-  { path: 'admin', component: AdminPanelComponent, canActivate: [ AuthGuard ]},
-  { path: 'test-api', component: TestApiComponent}
+  { path: 'login', component: LoginComponent },
+  { path: 'gallery', component: GalleryComponent },
+  { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard] },
+  { path: 'test-api', component: TestApiComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
