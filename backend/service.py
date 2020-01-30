@@ -264,6 +264,17 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
 
+    @app.route('/get-images', methods=['GET'])
+    def get_all_images():
+        path = os.getcwd() + "/uploads/images"
+        list_of_files = {}
+
+        for filename in os.listdir(path):
+            filename = filename.translate(None, '.png')
+            list_of_files[filename] = "/image?id=" + filename
+        return jsonify(list_of_files)
+
+
     ################################
     ##     FILE UPLOAD METHODS    ##
     ################################
@@ -282,7 +293,7 @@ def create_app(test_config=None):
                 exists = send_query_("SELECT * FROM offer WHERE id='{}'").format(id_)
                 query = "UPDATE offer SET pdf='{}' WHERE id='{}'".format(filelink,id_)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/pdfs", filename))
-                return 'File successfully uploaded, {}'.format(send_query(query))
+                return jsonify('File successfully uploaded, {}'.format(send_query(query)))
             else:
                 abort(400, 'Allowed file types are pdf')
         else:
@@ -312,7 +323,7 @@ def create_app(test_config=None):
                 filelink = "image?id={}".format(id_)
                 query = "UPDATE offer SET image='{}' WHERE id='{}'".format(filelink,id_)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/images", filename))
-                return 'File successfully uploaded, {}'.format(send_query(query))
+                return jsonify('File successfully uploaded, {}'.format(send_query(query)))
             else:
                 abort(400, 'Allowed file types are png')
         else:
