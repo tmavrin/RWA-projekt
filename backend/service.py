@@ -20,13 +20,13 @@ def create_app(test_config=None):
 
     last_restart= datetime.now()
     
-    #app.config['MYSQL_HOST'] = '172.17.0.2'
-    #app.config['MYSQL_USER'] = 'root'
-    #app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
+    app.config['MYSQL_HOST'] = '172.17.0.2'
+    app.config['MYSQL_USER'] = 'root'
+    app.config['MYSQL_PASSWORD'] = 'rwaprojekt'
 
-    app.config['MYSQL_HOST'] = 'localhost'
-    app.config['MYSQL_USER'] = 'duser'
-    app.config['MYSQL_PASSWORD'] = 'duserpass'
+    #app.config['MYSQL_HOST'] = 'localhost'
+    #app.config['MYSQL_USER'] = 'duser'
+    #app.config['MYSQL_PASSWORD'] = 'duserpass'
 
     app.config['MYSQL_DB'] = 'agencija'
     app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -181,9 +181,9 @@ def create_app(test_config=None):
             query += " WHERE title LIKE '%{}%' OR description LIKE '%{}%'".format(search, search)
         if (check_params(request.args, 'price')):
             price = request.args.get('price')
-            if price == 1:
+            if price == '1':
                 query += " ORDER BY price DESC"
-            elif price == 0:
+            elif price == '0':
                 query += " ORDER BY price ASC"
         if (check_params(request.args, 'pageNo', 'itemNo')):
             pageNo = request.args.get('pageNo')
@@ -280,9 +280,6 @@ def create_app(test_config=None):
                 filename = "{}.pdf".format(id_)
                 filelink = "pdf?id={}".format(id_)
                 exists = send_query_("SELECT * FROM offer WHERE id='{}'").format(id_)
-                if (exists == "no result"):
-                    abort(400,"Invalid id")
-
                 query = "UPDATE offer SET pdf='{}' WHERE id='{}'".format(filelink,id_)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/pdfs", filename))
                 return 'File successfully uploaded, {}'.format(send_query(query))
@@ -313,11 +310,6 @@ def create_app(test_config=None):
             if file and allowed_img(file.filename):
                 filename = "{}.png".format(id_)
                 filelink = "image?id={}".format(id_)
-
-                exists = send_query_("SELECT * FROM offer WHERE id='{}'").format(id_)
-                if (exists == "no result"):
-                    abort(400,"Invalid id")
-
                 query = "UPDATE offer SET image='{}' WHERE id='{}'".format(filelink,id_)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'] + "/images", filename))
                 return 'File successfully uploaded, {}'.format(send_query(query))
