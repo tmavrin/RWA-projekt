@@ -74,7 +74,7 @@ export class CoreService {
 
   uploadImage(id: string, image: File) {
     const formData = new FormData();
-    formData.append('pdf', image, image.name);
+    formData.append('image', image, image.name);
     const params = new HttpParams().append('id', id);
     return this.http.post(this.backendUrl + '/image', formData, { params });
   }

@@ -25,15 +25,33 @@ export class AuthTokenService implements HttpInterceptor {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
 
-    */
-    if (this.authService.currentUserValue) {
-      request = request.clone({
-        headers: new HttpHeaders({
-          Authorization: this.authService.currentUserValue.jwtToken
-        })
-      });
+  */
+    if (this.shouldAddToken(request)) {
+      if (this.authService.currentUserValue) {
+        request = request.clone({
+          headers: new HttpHeaders({
+            Authorization: this.authService.currentUserValue.jwtToken
+          })
+        });
+      }
     }
-  //  console.log(request);
+
     return next.handle(request);
+  }
+
+  shouldAddToken(req: HttpRequest<any>) {
+    const addr = req.url.split('/')[3];
+    if (
+      (addr === 'offers' ||
+        addr === 'top-offers' ||
+        addr === 'image' ||
+        addr === 'pdf' ||
+        addr === 'offers-count') &&
+      req.method === 'GET'
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

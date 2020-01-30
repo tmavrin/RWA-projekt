@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { CoreService } from '../../core/core.service';
 import { Offer } from '../../core/VO/Offer';
 
@@ -16,7 +22,6 @@ import { Offer } from '../../core/VO/Offer';
   ]
 })
 export class AdminPanelComponent implements OnInit {
-
   newOffer = new Offer('', '', '');
   offers: any;
   maxPage = 0;
@@ -27,21 +32,34 @@ export class AdminPanelComponent implements OnInit {
   constructor(protected coreService: CoreService) {}
 
   ngOnInit() {
-    this.coreService.getNumberOfOffers().subscribe(data => {
-      this.maxPage = Math.ceil(JSON.parse(JSON.stringify(data)).count / 5);
-    }, error => { console.log(error.message); });
+    this.coreService
+      .getNumberOfOffers()
+      .toPromise()
+      .then(
+        data => {
+          this.maxPage = Math.ceil(JSON.parse(JSON.stringify(data)).count / 5);
+        },
+        error => {
+          console.log(error.message);
+        }
+      );
 
     this.getOffers(0);
   }
 
   getOffers(pageNo) {
     this.currentPage = pageNo;
-    this.coreService.getOffersByPage(pageNo, 5).subscribe(data => {
-      this.offers = data;
-      for (let i = 0; i < this.offers.length; i++) {
-        this.expand[i] = false;
+    this.coreService.getOffersByPage(pageNo, 5).subscribe(
+      data => {
+        this.offers = data;
+        for (let i = 0; i < this.offers.length; i++) {
+          this.expand[i] = false;
+        }
+      },
+      error => {
+        console.log(error.message);
       }
-    }, error => { console.log(error.message); });
+    );
   }
 
   expandForm(j) {
@@ -51,12 +69,17 @@ export class AdminPanelComponent implements OnInit {
   }
 
   delete(j) {
-    this.coreService.deleteOffer(this.offers[j].id).subscribe(data => {
-      this.offers = data;
-      this.expand = [];
-      for (let i = 0; i < this.offers.length; i++) {
-        this.expand[i] = false;
+    this.coreService.deleteOffer(this.offers[j].id).subscribe(
+      data => {
+        this.offers = data;
+        this.expand = [];
+        for (let i = 0; i < this.offers.length; i++) {
+          this.expand[i] = false;
+        }
+      },
+      error => {
+        console.log(error.message);
       }
-    }, error => { console.log(error.message); });
+    );
   }
 }

@@ -153,7 +153,7 @@ def create_app(test_config=None):
     jwt = JWT(app, authenticate, identity)
 
     @app.route('/protected', methods=['GET'])
-    #@jwt_required()
+    @jwt_required()
     def protected():
         return jsonify("JWT Token: VALID")
 
@@ -198,7 +198,7 @@ def create_app(test_config=None):
         return jsonify(data[0])
 
     @app.route('/offers', methods=['POST'])
-    #@jwt_required()
+    @jwt_required()
     def create_offer():
         data = request.get_json()
         if(check_request_body(data, 'title', 'description', 'price')):
@@ -211,7 +211,7 @@ def create_app(test_config=None):
             abort(400, "missing properties from body, REQUIRED: title, description, price")
 
     @app.route('/offers', methods=['PUT'])
-    #@jwt_required()
+    @jwt_required()
     def update_offerr():
         data = request.get_json()
         # mozda postoji bolji nacin za ovo?
@@ -229,7 +229,7 @@ def create_app(test_config=None):
             abort(400, "missing properties from body, REQUIRED: title, description, price, id")
 
     @app.route('/offers', methods=['DELETE'])
-    #@jwt_required()
+    @jwt_required()
     def delete_offer():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -244,7 +244,7 @@ def create_app(test_config=None):
         return send_query(query)
 
     @app.route('/top-offers', methods=['POST'])
-    #@jwt_required()
+    @jwt_required()
     def set_top_offers():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -254,7 +254,7 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/top-offers', methods=['DELETE'])
-    #@jwt_required()
+    @jwt_required()
     def remove_top_offers():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -269,7 +269,7 @@ def create_app(test_config=None):
     ################################
 
     @app.route('/pdf', methods=['POST'])
-    #@jwt_required()
+    @jwt_required()
     def upload_pdf():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
@@ -300,7 +300,7 @@ def create_app(test_config=None):
             abort(400, "Missing id param, REQUIRED: id")
 
     @app.route('/image', methods=['POST'])
-    #@jwt_required()
+    @jwt_required()
     def upload_image():
         if(check_params(request.args, 'id')):
             id_ = request.args.get('id')
