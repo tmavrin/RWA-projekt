@@ -1,33 +1,51 @@
 <form [formGroup]="editForm" class="flex_space_between">
+  <div *ngIf="this.method === 'edit'" class="edit-image">
+    <img
+      *ngIf="offer.image"
+      src="{{ 'http://178.238.232.172:8080/' + offer?.image }}"
+    />
 
-  <div class="edit-image">
-    <img *ngIf="offer.image" src="{{ 'http://178.238.232.172:8080/' + offer?.image }}" />
-
-    <input type="file" id="image" (change)="onFileChange($event, 'png')"/>
-    <label for="image" class="pointer uppercase">Edit image</label><br>
-    <p *ngIf="image">{{image.name}}</p>
+    <input type="file" id="image" (change)="onFileChange($event, 'png')" />
+    <label for="image" class="pointer uppercase">Edit image</label><br />
+    <p *ngIf="image">{{ image.name }}</p>
   </div>
 
   <div class="edit-text">
-
     <div class="star-rating">
-      <input type="checkbox" formControlName="isTop" id="{{ offer.id ? offer.id : 'x' }}" />
+      <input
+        type="checkbox"
+        formControlName="isTop"
+        id="{{ offer.id ? offer.id : 'x' }}"
+      />
       <label for="{{ offer.id ? offer.id : 'x' }}" class="pointer"></label>
     </div>
 
-    <input type="text" formControlName="title" class="uppercase">
+    <input
+      type="text"
+      formControlName="title"
+      class="uppercase"
+      maxlength="30"
+    />
 
-    <textarea formControlName="description" rows="4"></textarea>
+    <textarea formControlName="description" rows="4" maxlength="510"></textarea>
 
-    <div>
+    <div *ngIf="this.method === 'edit'">
       <label>Plan i program</label>
-      <input type="file" name="pdf" id="pdf" (change)="onFileChange($event, 'pdf')"/>
-      <label for="pdf" class="pointer uppercase">{{ pdf ? 'Edit pdf' : 'Add pdf' }}</label>
-      <span *ngIf="pdf">{{pdf.name}}</span>
+      <input
+        type="file"
+        name="pdf"
+        id="pdf"
+        (change)="onFileChange($event, 'pdf')"
+      />
+      <label for="pdf" class="pointer uppercase">{{
+        pdf ? 'Edit pdf' : 'Add pdf'
+      }}</label>
+      <span *ngIf="pdf">{{ pdf.name }}</span>
     </div>
 
     <div>
-    <label>Price</label> <input type="text" formControlName="price"> EUR
+      <label>Price</label>
+      <input type="number" formControlName="price" maxlength="10" /> EUR
     </div>
 
     <button (click)="collapse.emit()" style="right: 140px">Cancel</button>

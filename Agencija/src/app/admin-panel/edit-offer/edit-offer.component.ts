@@ -140,12 +140,40 @@ export class EditOfferComponent implements OnInit {
     this.coreService.addOffer(this.offer).subscribe(
       data => {
         console.log('good offer :)', data);
-        this.collapse.emit();
+        this.upload();
       },
       error => {
         console.log('bad offer :(');
-        this.collapse.emit();
+        this.upload();
       }
     );
+  }
+
+  upload() {
+    if (this.pdf !== null && typeof this.pdf !== 'string') {
+      this.coreService.uploadPdf(this.offer.id, this.pdf).subscribe(
+        data => {
+          //console.log('good pdf :)', data);
+          this.collapse.emit();
+        },
+        error => {
+          //console.error('bad pdf :(');
+          this.collapse.emit();
+        }
+      );
+    }
+
+    if (this.image !== null) {
+      this.coreService.uploadImage(this.offer.id, this.image).subscribe(
+        data => {
+          //console.log('good image :)', data);
+          this.collapse.emit();
+        },
+        error => {
+          //console.error('bad image :(');
+          this.collapse.emit();
+        }
+      );
+    }
   }
 }

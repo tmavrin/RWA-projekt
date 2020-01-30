@@ -21,7 +21,7 @@
       *ngIf="expand[i]"
       [offer]="o"
       (collapse)="expand[i] = false; getNumberOfOffers()"
-      (done)="getOffers(currentPage)"
+      (done)="getNumberOfOffers()"
     >
     </app-edit-offer>
   </div>
@@ -31,7 +31,7 @@
   <div *ngIf="add" class="container yellow-shadow">
     <app-edit-offer
       [offer]="newOffer"
-      (collapse)="add = false"
+      (collapse)="add = false; getNumberOfOffers()"
     ></app-edit-offer>
   </div>
 </div>
