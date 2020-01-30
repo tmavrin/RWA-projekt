@@ -9,10 +9,19 @@
   button {
     border-color: #fe454b;
     color: #fe454b;
+    a, a:focus, a:active {
+      color: #fe454b;
+    }
+    a::after {
+      background: white;
+    }
   }
   button:hover {
     background: #fe454b;
     color: white;
+    a, a:focus, a:active {
+      color: white;
+    }
   }
 
   img {
