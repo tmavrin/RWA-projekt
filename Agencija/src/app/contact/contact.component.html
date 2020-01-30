@@ -4,8 +4,10 @@
   <div class="container blue-shadow info flex_center_center">
     <div>
       <h3>Address</h3>
-      <p>Vukovarska 58<br>
-         51000 Rijeka, Croatia</p>
+      <p>
+        Vukovarska 58<br />
+        51000 Rijeka, Croatia
+      </p>
 
       <h3>Phone number</h3>
       <p>+385 98 123 456</p>
@@ -16,19 +18,25 @@
   </div>
 
   <div class="container blue-shadow">
-    <h3 class="uppercase">Have any enquiries?<br>You can send us an e-mail!</h3>
+    <h3 class="uppercase">
+      Have any enquiries?<br />You can send us an e-mail!
+    </h3>
 
     <form [formGroup]="emailForm">
       <p>Your e-mail address</p>
-      <input type="text" formControlName="email"/>
+      <input type="text" formControlName="email" />
       <p>Subject</p>
-      <input type="text" formControlName="subject"/>
+      <input type="text" formControlName="subject" />
       <p>Your message</p>
       <textarea formControlName="message" rows="5"></textarea>
 
-      <p *ngIf="emailForm.invalid && showErrorMessage">Please fill in all the fields</p>
+      <p *ngIf="emailForm.invalid && showErrorMessage">
+        Please fill in all the fields
+      </p>
 
-      <button (click)="submit()">Send</button>
+      <a href="mailto:tomi.mavrin@gmail.com">
+        Send
+      </a>
     </form>
   </div>
 </div>
